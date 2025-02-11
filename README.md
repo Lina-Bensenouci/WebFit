@@ -1,0 +1,1 @@
+# Gabarit React/Vite utilisé dans le cours 582-4PA
