@@ -1,6 +1,6 @@
 # WebFit
 
-Site Web pour une salle de musculation fictive
+Projet site web pour une salle de musculation fictive
 
 ## Backend
 - FastAPI
