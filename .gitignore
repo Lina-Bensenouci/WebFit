@@ -1,0 +1,10 @@
+backend/venv/
+backend/__pycache__/
+FitWeb/node_modules/
+FitWeb/dist/
+.vscode/
+backend/venv/
+backend/__pycache__/
+FitWeb/node_modules/
+FitWeb/dist/
+.vscode/
