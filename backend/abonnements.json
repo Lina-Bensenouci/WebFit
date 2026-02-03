@@ -1,0 +1,15 @@
+{
+  "abonnements": [
+    {
+      "id": 1,
+      "nom": "Premium",
+      "prix": 445.99,
+      "duree": "1 mois",
+      "avantages": [
+        "Accès illimité",
+        "Support prioritaire",
+        "Contenu exclusif"
+      ]
+    }
+  ]
+}

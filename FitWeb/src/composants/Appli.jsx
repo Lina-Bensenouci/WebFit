@@ -1,10 +1,11 @@
 import './Appli.scss';
+import Abonnements from './PageAbonnements.jsx';
 
 function Appli() {
 
   return (
     <div className='Appli'>
-      <Accueil />
+      <Abonnements />
     </div>
   )
 }
