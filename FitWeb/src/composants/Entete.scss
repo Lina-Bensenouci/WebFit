@@ -1,3 +1,4 @@
+/* Mobile first */
 .entete {
   height: 60px;
   color: white;
@@ -38,11 +39,41 @@
 .menu {
   position: fixed;
   inset: 0;
-  background: #000;
+  height: 100vh;
+    background-color: #1a1a1a;
+
+  /* Grain + gradient plus foncé */
+  background-image: 
+    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, #0d0d0d, #1a1a1a); /* gradient plus sombre */
+
+  /* Taille des calques */
+  background-size: 10px 10px, 10px 10px, 100% 100%;
+
+  /* Position des calques */
+  background-position: 0 0, 5px 5px, 0 0;
+
+  /* Répétition */
+  background-repeat: repeat, repeat, no-repeat;
   color: white;
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
   z-index: 2000;
+  /* Scrollable */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* NE PAS centrer verticalement */
+  align-items: center;
+  overflow-y: auto; /* permet de scroller si le contenu dépasse */
+  padding-top: 50px; /* optionnel : espace en haut */
+  padding-bottom: 50px;
+}
+
+.menu-logo img {
+  height: 200px;
+  width: auto;
+  margin-top: 15%;
 }
 
 .menu.open {
@@ -56,39 +87,123 @@
   font-size: 26px;
   background: none;
   border: none;
-  color: white;
+  color: #2A8943;
   cursor: pointer;
 }
 
 nav {
-  margin-top: 80px;
+  margin-top: 10%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 30px;
   padding-left: 16px;
+  align-items: center;
 
   a, a:visited, a:link, .router-link {
     color: white;
     text-decoration: none;
-    font-size: 22px;
+    font-size: 32px;
     font-family: "Anton", sans-serif;
+    text-transform: uppercase;
   }
+}
+/* Desktop menu */
+.menu-desktop-nav {
+  display: none; /* caché par défaut */
 }
 
 /* Desktop */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1090px) {
   .burger {
-    display: none;
+    display: none; /* plus de burger */
   }
 
   .menu {
-    display: none;
+    display: none; /* cache le menu burger mobile */
+  }
+
+  .entete {
+    justify-content: space-between;
+    align-items: center; /* centre verticalement logo + nav + login */
   }
 
   .entete-logo img {
     height: 60px;
   }
 
+  .entete-droite {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* espace entre nav et login */
+  }
+
+/* Desktop menu */
+.menu-desktop-nav {
+  display: flex;
+  flex-direction: row; /* ligne */
+  align-items: center; /* centre verticalement */
+  gap: 38px;
+  margin: 0; /* supprime le margin-top mobile */
+  padding: 0; /* supprime le padding mobile */
+}
+
+.menu-desktop-nav a {
+  font-size: 21px !important;
+
+}
+  .login-icon {
+    height: 35px;
+  }
+}
+
+@media (min-width: 1091px) {
+  .burger {
+    display: none; /* plus de burger */
+  }
+
+  .menu {
+    display: none; /* cache le menu burger mobile */
+  }
+
+  .entete {
+    justify-content: space-between;
+    align-items: center; /* centre verticalement logo + nav + login */
+  }
+
+  .entete-logo img {
+    height: 70px;
+  }
+
+  .entete-droite {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* espace entre nav et login */
+  }
+
+/* Desktop menu */
+.menu-desktop-nav {
+  display: flex;
+  flex-direction: row; /* ligne */
+  align-items: center; /* centre verticalement */
+  gap: 64px;
+  margin: 0; /* supprime le margin-top mobile */
+  padding: 0; /* supprime le padding mobile */
+}
+
+/* Desktop menu */
+.menu-desktop-nav {
+  display: flex;
+  flex-direction: row; /* ligne */
+  align-items: center; /* centre verticalement */
+  margin: 0; /* supprime le margin-top mobile */
+  padding: 0; /* supprime le padding mobile */
+  gap: 70px;
+}
+
+.menu-desktop-nav a {
+  font-size: 30px !important;
+
+}
   .login-icon {
     height: 35px;
   }
