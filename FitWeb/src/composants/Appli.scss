@@ -1,3 +1,22 @@
-.Appli {
- 
+body{
+  background-color: #1a1a1a;
+
+  /* Grain + gradient plus foncé */
+  background-image: 
+    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, #0d0d0d, #1a1a1a); /* gradient plus sombre */
+
+  /* Taille des calques */
+  background-size: 10px 10px, 10px 10px, 100% 100%;
+
+  /* Position des calques */
+  background-position: 0 0, 5px 5px, 0 0;
+
+  /* Répétition */
+  background-repeat: repeat, repeat, no-repeat;
+
+  /* Texte */
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
 }
