@@ -98,15 +98,37 @@ nav {
   gap: 30px;
   padding-left: 16px;
   align-items: center;
-
-  a, a:visited, a:link, .router-link {
-    color: white;
-    text-decoration: none;
-    font-size: 32px;
-    font-family: "Anton", sans-serif;
-    text-transform: uppercase;
-  }
 }
+
+nav a,
+nav a:visited,
+nav a:link,
+nav .router-link {
+  color: white;                     /* texte blanc de base */
+  text-decoration: none;
+  font-size: 32px;
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  transition: color 0.3s ease, transform 0.2s ease; /* transition fluide */
+  display: inline-block;
+}
+
+/* Hover et focus */
+nav a:hover,
+nav a:focus,
+nav .router-link:hover,
+nav .router-link:focus {
+  color: #2A8943;    /* devient vert */
+  transform: scale(1.05);  /* petite augmentation */
+}
+
+/* Lien actif (page courante) */
+nav a.active,
+nav .router-link.active {
+  color: #2A8943;    /* vert permanent */
+  transform: scale(1.05);
+}
+
 /* Desktop menu */
 .menu-desktop-nav {
   display: none; /* caché par défaut */
@@ -148,7 +170,7 @@ nav {
 }
 
 .menu-desktop-nav a {
-  font-size: 21px !important;
+  font-size: 20px !important;
 
 }
   .login-icon {
