@@ -32,12 +32,18 @@
           color: #2A8943;    /* devient vert */
           transform: scale(1.04);  /* petite augmentation */
         }
+        &.active {
+          text-decoration: underline;
+          color: #2A8943;    /* devient vert */
+          transform: scale(1.04);  /* petite augmentation */
+        }
       }
     }
   }
 
   h1, h2, h3, h4 {
     font-family: "Anton", sans-serif;
+    letter-spacing: 0.7px;
   }
 
   .footer-socials {
@@ -74,10 +80,14 @@
 @media (min-width: 768px) {
   .footer {
     gap: 30px;
-
+    
+    .footer-title {
+      font-size: 1.5rem; 
+      text-align: center;
+    }
     .footer-menu-wrapper {
       .footer-title {
-      font-size: 1.5rem;
+        font-size: 1.5rem; 
     }
       .footer-menu {
         flex-direction: column;

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "./Pied2Page.scss";
 import LogoWebFit from "../Images/Logo4WebFit.png";
 import InstaIcon from "../Images/instagram.png";
@@ -6,14 +7,15 @@ import TikTokIcon from "../Images/tiktok.png";
 export default function Footer() {
   return (
     <footer className="footer">
-      {/* Menu à gauche */}
+      {/* Menu */}
       <div className="footer-menu-wrapper">
         <h4 className="footer-title">Explorer</h4>
         <nav className="footer-menu">
-          <a href="#accueil">Accueil</a>
-          <a href="#abonnements">Abonnements</a>
-          <a href="#coursGroupe">Cours en groupe</a>
-          <a href="#horaires">Horaire</a>
+          <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Accueil</NavLink>
+          <NavLink to="/abonnements" className={({ isActive }) => isActive ? "active" : ""}>Abonnements</NavLink>
+          <NavLink to="/coursGroupe" className={({ isActive }) => isActive ? "active" : ""}>Cours en groupe</NavLink>
+          <a href="#aPropos">À propos</a>
+          <a href="#horaire">Horaires</a>
         </nav>
       </div>
 
