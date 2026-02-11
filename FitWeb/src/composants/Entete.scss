@@ -12,6 +12,10 @@
 .entete-logo img {
   height: 50px;
   width: auto;
+  transition: transform 0.5s ease;
+}
+.entete-logo:hover {
+  transform: scale(1.015);
 }
 
 /* Burger + Login collés */
@@ -33,6 +37,10 @@
   height: 30px;
   width: auto;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.login-icon:hover {
+  transform: scale(1.03);
 }
 
 /* Menu burger */
@@ -109,7 +117,7 @@ nav .router-link {
   font-size: 32px;
   font-family: "Anton", sans-serif;
   text-transform: uppercase;
-  transition: color 0.3s ease, transform 0.2s ease; /* transition fluide */
+  transition: color 0.3s ease, transform 0.4s ease; /* transition fluide */
   display: inline-block;
 }
 
@@ -119,7 +127,7 @@ nav a:focus,
 nav .router-link:hover,
 nav .router-link:focus {
   color: #2A8943;    /* devient vert */
-  transform: scale(1.05);  /* petite augmentation */
+  transform: scale(1.04);  /* petite augmentation */
 }
 
 /* Lien actif (page courante) */
@@ -188,6 +196,7 @@ nav .router-link.active {
   }
 
   .entete {
+    margin-top: 1%;
     justify-content: space-between;
     align-items: center; /* centre verticalement logo + nav + login */
   }

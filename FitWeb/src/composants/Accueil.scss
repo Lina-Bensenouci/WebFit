@@ -1,0 +1,175 @@
+/* Accueil.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.accueil {
+  width: 100%;
+  margin-top: 0.7%;
+}
+
+/* Hero banner */
+.hero-affiche {
+  width: 100%;
+  height: 270px;
+  background-image: url('../Images/Gym14.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+
+  /* Bloc CTA (bas droite) */
+  .hero-cta {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  /* Prix au-dessus du bouton */
+  .hero-prix {
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.85);
+      position: relative;
+  }
+  
+
+  /* Bouton */
+  .hero-bouton {
+    padding: 8px 8px;
+    font-size: 0.6rem;
+    background-color: #2A8943;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+    font-family: "Anton", sans-serif;
+    box-shadow: 0 2px 4px #616161;
+  }
+
+  .hero-bouton:hover {
+    background-color: #1E6B2F;
+    transform: scale(1.01);
+  }
+  
+
+  /* Slogan sous le bouton */
+  .hero-slogan {
+    font-size: 0.5rem;
+    color: rgb(255, 255, 255);
+    text-align: right;
+    max-width: 300px;
+  }
+}
+
+/* Contenu normal de la page */
+.accueil-contenu {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+  position: relative;       /* indispensable pour le z-index */
+  width: 100%;              /* prends toute la largeur */
+  max-width: 1900px;        /* si tu veux limiter la largeur */
+  margin: 0 auto;           /* centre le bloc */
+  
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100vw;                 /* prend toute la largeur de l’écran */
+    height: 100%;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: -100vw;                 /* côté gauche */
+    box-shadow: 5px 0 15px rgba(42,137,67,0.4);
+  }
+
+  &::after {
+    right: -100vw;                /* côté droit */
+    box-shadow: -5px 0 15px rgba(42,137,67,0.4);
+  }
+
+
+  /* Images normales */
+.image-a-propos {
+  width: 120%;
+  height: 270px;
+
+  background-image: url('../Images/Gym13.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+  p{
+    font-size: 0.9rem;
+    max-width: 550px;
+    text-align: center;
+  }
+}
+
+
+
+/* Responsive mobile */
+@media (min-width: 768px) {
+  .hero-affiche {
+    height: 600px;
+
+    /* Bloc CTA (bas droite) */
+    .hero-cta {
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .hero-bouton {
+      padding: 15px 20px;
+      font-size: 1.2rem;
+    }
+
+      /* Prix au-dessus du bouton */
+    .hero-prix {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .hero-slogan {
+      font-size: 0.85rem;
+    }
+  }
+  .accueil-contenu {
+    /* Images normales */
+    .image-a-propos {
+      width: 80%;
+      height: 400px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px #2A8943;
+    }
+      p{
+      max-width: 900px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+    h1{
+      font-size: 2.5rem;
+    }
+}
+}
