@@ -128,6 +128,8 @@ nav .router-link:hover,
 nav .router-link:focus {
   color: #2A8943;    /* devient vert */
   transform: scale(1.04);  /* petite augmentation */
+  text-decoration: underline;
+
 }
 
 /* Lien actif (page courante) */
@@ -135,6 +137,7 @@ nav a.active,
 nav .router-link.active {
   color: #2A8943;    /* vert permanent */
   transform: scale(1.05);
+  text-decoration: underline;
 }
 
 /* Desktop menu */

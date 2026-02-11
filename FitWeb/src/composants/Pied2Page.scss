@@ -1,0 +1,145 @@
+/* Pied2Page.scss */
+
+/* Mobile-first */
+.footer {
+  display: flex;
+  flex-direction: row; /* row par défaut */
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  color: #fff;
+
+  .footer-menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centre le titre et les liens */
+    gap: 5px;
+    .footer-title {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    .footer-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        &:hover {
+          text-decoration: underline;
+          color: #2A8943;    /* devient vert */
+          transform: scale(1.04);  /* petite augmentation */
+        }
+      }
+    }
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Anton", sans-serif;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 10px;
+    padding-top: 3px;
+    border: 1px solid #294F26; /* bordure autour des deux icônes */
+    border-radius: 10px;
+    background-color: rgba(57, 57, 57, 0.337254902);
+    width: 80px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    padding-left: 2px;
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .footer-horaires {
+    display: none; /* caché sur mobile */
+  }
+
+  .footer-logo {
+    img {
+      width: 90px;
+      height: auto;
+    }
+  }
+}
+
+/* Desktop (≥768px) */
+@media (min-width: 768px) {
+  .footer {
+    gap: 30px;
+
+    .footer-menu-wrapper {
+      .footer-title {
+      font-size: 1.5rem;
+    }
+      .footer-menu {
+        flex-direction: column;
+        gap: 10px;
+
+        a {
+        font-size: 1.2rem;
+      }
+      }
+    }
+
+    .footer-horaires {
+  display: block;
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #294F26;
+    border-radius: 15px;
+    overflow: hidden;
+
+    th, td {
+      padding: 5px 10px;
+      background-color: #3939393b;
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    /* Ligne en dessous des titres */
+    th {
+      border-bottom: 1px solid #294F26;
+      background-color: #3939393b;
+    }
+
+    /* lignes intérieures */
+    th:not(:last-child),
+    td:not(:last-child) {
+      border-right: 1px solid #294F26;
+    }
+
+    tr:not(:last-child) td {
+      border-bottom: 1px solid #294F26;
+    }
+  }
+}
+
+
+    .footer-logo img {
+      width: 180px;
+    }
+
+    .footer-socials {
+    padding-top: 3px;
+    width: 130px;
+    height: 70px;
+    padding-left: 2px;
+    img {
+      width: 45px;
+      height: 45px;
+    }
+  }
+  }
+}

@@ -1,12 +1,12 @@
 // Appli.jsx
 import './Appli.scss';
 import Entete from './Entete.jsx';
+import Pied2Page from './Pied2Page.jsx';
 import Accueil from './Accueil.jsx';
 import PageAbonnements from './PageAbonnements.jsx';
 import Abonnement from './PageUnAbonnement.jsx';
 import CoursGroupe from './CoursGroupe.jsx';
 
-// Importation Routes et Route
 import { Routes, Route } from 'react-router-dom';
 
 function Appli() {
@@ -19,8 +19,9 @@ function Appli() {
         <Route path="/abonnements" element={<PageAbonnements />} />
         <Route path="/abonnement/:id" element={<Abonnement />} />
         <Route path="/coursGroupe" element={<CoursGroupe />} />
-        {/* Ajouter d'autres page ici */}
       </Routes>
+
+      <Pied2Page />
     </div>
   );
 }
