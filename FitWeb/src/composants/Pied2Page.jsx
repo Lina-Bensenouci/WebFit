@@ -41,13 +41,13 @@ export default function Footer() {
             </tr>
           </thead>
           <tbody>
-            <tr><td>Lundi</td><td>6h</td><td>22h</td></tr>
-            <tr><td>Mardi</td><td>6h</td><td>22h</td></tr>
-            <tr><td>Mercredi</td><td>6h</td><td>22h</td></tr>
-            <tr><td>Jeudi</td><td>6h</td><td>22h</td></tr>
-            <tr><td>Vendredi</td><td>6h</td><td>22h</td></tr>
-            <tr><td>Samedi</td><td>8h</td><td>20h</td></tr>
-            <tr><td>Dimanche</td><td>Fermé</td><td>Fermé</td></tr>
+            <tr><td>Lundi</td><td>5h</td><td>23h</td></tr>
+            <tr><td>Mardi</td><td>5h</td><td>23h</td></tr>
+            <tr><td>Mercredi</td><td>5h</td><td>23h</td></tr>
+            <tr><td>Jeudi</td><td>5h</td><td>23h</td></tr>
+            <tr><td>Vendredi</td><td>5h</td><td>23h</td></tr>
+            <tr><td>Samedi</td><td>5h</td><td>21h</td></tr>
+            <tr><td>Dimanche</td><td>7h</td><td>21h</td></tr>
           </tbody>
         </table>
       </div>
