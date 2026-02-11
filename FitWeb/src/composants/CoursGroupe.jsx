@@ -1,3 +1,4 @@
+// CoursGroupe.jsx
 import "./CoursGroupe.scss";
 
 export default function CoursEnGroupe() {

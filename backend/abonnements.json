@@ -2,9 +2,48 @@
   "abonnements": [
     {
       "id": 1,
-      "nom": "Premium",
-      "prix": 445.99,
-      "duree": "1 mois",
+      "nom": "1 Mois",
+      "prix": 35,
+      "avantages": [
+        "Accès illimité",
+        "Support prioritaire",
+        "Contenu exclusif"
+      ]
+    },
+    {
+      "id": 2,
+      "nom": "3 Mois",
+      "prix": 99,
+      "avantages": [
+        "Accès illimité",
+        "Support prioritaire",
+        "Contenu exclusif"
+      ]
+    },
+    {
+      "id": 3,
+      "nom": "1 An Classic",
+      "prix": 265,
+      "avantages": [
+        "Accès illimité",
+        "Support prioritaire",
+        "Contenu exclusif"
+      ]
+    },
+    {
+      "id": 4,
+      "nom": "1 An Premium",
+      "prix": 265,
+      "avantages": [
+        "Accès illimité",
+        "Support prioritaire",
+        "Contenu exclusif"
+      ]
+    },
+        {
+      "id": 5,
+      "nom": "1 An Pro",
+      "prix": 265,
       "avantages": [
         "Accès illimité",
         "Support prioritaire",

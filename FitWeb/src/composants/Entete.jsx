@@ -1,3 +1,4 @@
+// Entete.jsx
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./Entete.scss";
