@@ -46,7 +46,6 @@ export default function PageAbonnements() {
           <div key={abonnement.id} className="abonnement-carte">
             <h2>{abonnement.nom}</h2>
             <p>Prix : {abonnement.prix} $</p>
-            <p>Durée : {abonnement.duree || "Non spécifiée"}</p>
 
             <h3>Avantages :</h3>
             <ul>

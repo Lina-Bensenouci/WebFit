@@ -8,4 +8,4 @@ class Abonnement(Base):
     id = Column(Integer, primary_key=True, index=True)
     nom = Column(String, nullable=False)
     prix = Column(Integer, nullable=False)
-    avantages = Column(JSON, nullable=False, default=[])  # <- liste de textes
+    avantages = Column(JSON, nullable=False, default=[])

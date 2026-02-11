@@ -49,9 +49,24 @@ def get_db():
 # -------------------
 # Routes publiques
 # -------------------
-@app.get("/abonnements", response_model=list[schemas.AbonnementResponse])
-def get_abonnements(db: Session = Depends(get_db)):
-    return db.query(models.Abonnement).all()
+@app.get("/abonnements")
+def lire_abonnements(db: Session = Depends(get_db)):
+    abonnements = db.query(models.Abonnement).all()
+
+    result = []
+    for a in abonnements:
+        avantages = [av.strip() for av in a.avantages]
+
+        result.append({
+            "id": a.id,
+            "nom": a.nom,
+            "prix": a.prix,
+            "avantages": avantages
+        })
+
+    return result
+
+
 
 # -------------------
 # Admin SQLAdmin
