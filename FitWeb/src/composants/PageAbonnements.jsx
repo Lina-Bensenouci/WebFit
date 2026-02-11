@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./PageAbonnements.scss";
 
 const API_URL = "http://localhost:8000";
@@ -26,7 +27,6 @@ export default function PageAbonnements() {
     chargerAbonnements();
   }, []);
 
-  // Tant que les données ne sont pas prêtes -> rien s'affiche
   if (abonnements === null && !erreur) return null;
 
   if (erreur) {
@@ -52,6 +52,11 @@ export default function PageAbonnements() {
                 <li key={index}>{avantage}</li>
               ))}
             </ul>
+
+            {/* Bouton vers la page d'abonnement individuel */}
+            <Link to={`/abonnement/${abonnement.id}`} state={{ abonnement }}>
+              <button className="abonnement-bouton">Voir l'abonnement</button>
+            </Link>
           </div>
         ))
       )}

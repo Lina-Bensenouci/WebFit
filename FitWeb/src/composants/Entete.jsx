@@ -20,9 +20,9 @@ export default function Entete() {
         <nav className="menu-desktop-nav">
           <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Accueil</NavLink>
           <NavLink to="/abonnements" className={({ isActive }) => isActive ? "active" : ""}>Abonnements</NavLink>
-          <NavLink to="/cours" className={({ isActive }) => isActive ? "active" : ""}>Cours en groupe</NavLink>
-          <a href="#about">À propos</a>
-          <a href="#hours">Horaires</a>
+          <NavLink to="/coursGroupe" className={({ isActive }) => isActive ? "active" : ""}>Cours en groupe</NavLink>
+          <a href="#aPropos">À propos</a>
+          <a href="#horaire">Horaires</a>
         </nav>
 
         {/* Login + Burger mobile */}
@@ -43,9 +43,9 @@ export default function Entete() {
         <nav>
           <NavLink to="/" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? "active" : ""}>Accueil</NavLink>
           <NavLink to="/abonnements" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? "active" : ""}>Abonnements</NavLink>
-          <NavLink to="/cours" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? "active" : ""}>Cours en groupe</NavLink>
-          <a href="#about" onClick={() => setIsOpen(false)}>À propos</a>
-          <a href="#hours" onClick={() => setIsOpen(false)}>Horaires</a>
+          <NavLink to="/coursGroupe" onClick={() => setIsOpen(false)} className={({ isActive }) => isActive ? "active" : ""}>Cours en groupe</NavLink>
+          <a href="#aPropos" onClick={() => setIsOpen(false)}>À propos</a>
+          <a href="#horaire" onClick={() => setIsOpen(false)}>Horaires</a>
         </nav>
       </div>
     </>
