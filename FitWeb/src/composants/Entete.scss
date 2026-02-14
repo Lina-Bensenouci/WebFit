@@ -7,6 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative; /* Ajouté pour le positionnement du menu */
 }
 
 .entete-logo img {
@@ -23,6 +24,50 @@
   display: flex;
   align-items: center;
   gap: 1px; /* espace entre burger et login */
+  position: relative; /* Ajouté pour le menu déconnexion */
+
+  /* --- AJOUT POUR DÉCONNEXION --- */
+  .conteneur-utilisateur {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .menu-deroulant {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #1a1a1a;
+      border: 1px solid #2A8943;
+      padding: 10px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 120px;
+      border-radius: 5px;
+
+      .nom-utilisateur {
+        color: white;
+        font-size: 14px;
+        font-family: "Anton", sans-serif;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .bouton-deconnexion {
+        background-color: #2A8943;
+        color: white;
+        border: none;
+        padding: 5px;
+        font-family: "Anton", sans-serif;
+        text-transform: uppercase;
+        cursor: pointer;
+        &:hover { opacity: 0.8; }
+        border-radius: 15px;
+      }
+    }
+  }
+  /* --- FIN AJOUT --- */
 }
 
 .burger {
@@ -76,6 +121,20 @@
   overflow-y: auto; /* permet de scroller si le contenu dépasse */
   padding-top: 50px; /* optionnel : espace en haut */
   padding-bottom: 50px;
+}
+
+/* (Deconnexion) */
+.bouton-deconnexion-mobile {
+  margin-top: 20px;
+  background: none;
+  border: 2px solid #2A8943;
+  color: #ffffff;
+  font-family: "Anton", sans-serif;
+  font-size: 24px;
+  padding: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 15px;
 }
 
 .menu-logo img {
@@ -146,100 +205,77 @@ nav .router-link.active {
   display: none; /* caché par défaut */
 }
 
-/* Desktop */
+/* Desktop (Garde tes media queries intactes) */
 @media (min-width: 768px) and (max-width: 1090px) {
-  .burger {
-    display: none; /* plus de burger */
+
+  .burger { 
+    display: none; 
   }
-
-  .menu {
-    display: none; /* cache le menu burger mobile */
+  .menu { 
+    display: none; 
   }
-
-  .entete {
-    justify-content: space-between;
-    align-items: center; /* centre verticalement logo + nav + login */
+  .entete { 
+    justify-content: space-between; 
+    align-items: center; 
   }
-
-  .entete-logo img {
-    height: 60px;
+  .entete-logo img { 
+    height: 60px; 
   }
-
-  .entete-droite {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* espace entre nav et login */
+  .entete-droite { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
   }
-
-/* Desktop menu */
-.menu-desktop-nav {
-  display: flex;
-  flex-direction: row; /* ligne */
-  align-items: center; /* centre verticalement */
-  gap: 38px;
-  margin: 0; /* supprime le margin-top mobile */
-  padding: 0; /* supprime le padding mobile */
-}
-
-.menu-desktop-nav a {
-  font-size: 20px !important;
-
-}
-  .login-icon {
-    height: 35px;
+  .menu-desktop-nav { 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    gap: 38px; 
+    margin: 0; 
+    padding: 0; 
+  }
+  .menu-desktop-nav a { 
+    font-size: 20px !important; 
+  }
+  .login-icon { 
+    height: 35px; 
   }
 }
 
 @media (min-width: 1091px) {
-  .burger {
-    display: none; /* plus de burger */
+
+  .burger { 
+    display: none; 
   }
-
-  .menu {
-    display: none; /* cache le menu burger mobile */
+  .menu { 
+    display: none; 
   }
-
-  .entete {
-    margin-top: 1%;
-    justify-content: space-between;
-    align-items: center; /* centre verticalement logo + nav + login */
+  .entete { 
+    margin-top: 1%; 
+    justify-content: 
+    space-between; 
+    align-items: center; 
   }
-
-  .entete-logo img {
-    height: 70px;
+  .entete-logo img { 
+    height: 70px; 
   }
-
-  .entete-droite {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* espace entre nav et login */
+  .entete-droite { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
   }
-
-/* Desktop menu */
-.menu-desktop-nav {
-  display: flex;
-  flex-direction: row; /* ligne */
-  align-items: center; /* centre verticalement */
-  gap: 64px;
-  margin: 0; /* supprime le margin-top mobile */
-  padding: 0; /* supprime le padding mobile */
-}
-
-/* Desktop menu */
-.menu-desktop-nav {
-  display: flex;
-  flex-direction: row; /* ligne */
-  align-items: center; /* centre verticalement */
-  margin: 0; /* supprime le margin-top mobile */
-  padding: 0; /* supprime le padding mobile */
-  gap: 70px;
-}
-
-.menu-desktop-nav a {
-  font-size: 30px !important;
-
-}
-  .login-icon {
-    height: 35px;
+  .menu-desktop-nav { 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    margin: 0; 
+    padding: 0; 
+    gap: 70px; 
+  }
+  .menu-desktop-nav a { 
+    font-size: 30px !important; 
+  }
+  .login-icon { 
+    height: 35px; 
   }
 }
