@@ -38,34 +38,35 @@ export default function PageUnAbonnement() {
 
   return (
     <div className="abonnement-page-container">
-      {/* Bouton retour vers la page précédente */}
+      <div className="affiche-abonnement"></div>
+      <div className="abonnement">
+      {/* Bouton retour vers la page précédente - Placé ici pour être sous l'affiche */}
       <Link to="/abonnements" className="btn-retour">← Retour aux offres</Link>
 
-      <div className="abonnement-detail-carte">
-        <div className="abonnement-titre">
-          <h1>{abonnement.nom}</h1>
-        </div>
-
-        <div className="abonnement-corps">
-          <div className="prix-container">
-            
-            <span className="prix-focus">{abonnement.prix}$</span>
-            
-            <span className="frequence-detail">
-              {estAnnuel ? " / an" : estTrimestriel ? " / 3 mois" : " / mois"}
-            </span>
+        <div className="abonnement-detail-carte">
+          <div className="abonnement-titre">
+            <h1>{abonnement.nom}</h1>
           </div>
 
-          <div className="avantages-section">
-            <h3>Ce qui est inclus :</h3>
-            <ul>
-              {(abonnement.avantages || []).map((avantage, index) => (
-                <li key={index}>{avantage}</li>
-              ))}
-            </ul>
-          </div>
+          <div className="abonnement-corps">
+            <div className="prix-container">
+              <span className="prix-focus">{abonnement.prix}$</span>
+              <span className="frequence-detail">
+                {estAnnuel ? " / an" : estTrimestriel ? " / 3 mois" : " / mois"}
+              </span>
+            </div>
 
-          <button className="bouton-abonner">S'abonner maintenant</button>
+            <div className="avantages-section">
+              <h3>Ce qui est inclus :</h3>
+              <ul>
+                {(abonnement.avantages || []).map((avantage, index) => (
+                  <li key={index}>{avantage}</li>
+                ))}
+              </ul>
+            </div>
+
+            <button className="bouton-abonner">S'abonner maintenant</button>
+          </div>
         </div>
       </div>
     </div>

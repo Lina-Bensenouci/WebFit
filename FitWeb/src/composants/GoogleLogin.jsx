@@ -5,8 +5,11 @@ const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
   useImperativeHandle(ref, () => ({
     prompt: () => {
       if (window.google) {
-        // Déclenche l'affichage du sélecteur de compte Google
-        window.google.accounts.id.prompt();
+        // Déclenche directement le bouton invisible pour ouvrir la fenêtre classique
+        const googleBtn = document.querySelector('div[id="google-hidden-btn"] div[role="button"]');
+        if (googleBtn) {
+          googleBtn.click();
+        }
       } else {
         console.error("Google API non chargée");
       }
@@ -19,27 +22,39 @@ const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
         window.google.accounts.id.initialize({
           client_id: "338498208696-blf1m0mpo43s3ebq6ntpsadbitp3n2mu.apps.googleusercontent.com",
           callback: handleCallbackResponse,
-          // Changé à false pour éviter les blocages (cool down) répétitifs en dev
-          use_fedcm_for_prompt: false, 
-          itp_support: true,
-          auto_select: false // Évite de connecter l'utilisateur sans clic
+          use_fedcm_for_prompt: true 
         });
+
+        // On crée le bouton mais on le cache
+        window.google.accounts.id.renderButton(
+          document.getElementById("google-hidden-btn"),
+          { theme: "outline", size: "large" } 
+        );
       }
     };
 
     const handleCallbackResponse = (response) => {
-      // Décodage du JWT renvoyé par Google pour extraire les infos utilisateur
-      const userObject = JSON.parse(atob(response.credential.split('.')[1]));
-      
-      onSuccess({
-        nom: userObject.name,
-        photo: userObject.picture,
-        email: userObject.email,
-        token: response.credential 
-      });
+      try {
+        // Décodage des infos utilisateur (Nom, Photo, Email)
+        const base64Url = response.credential.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
+          '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        ).join(''));
+
+        const userObject = JSON.parse(jsonPayload);
+        
+        onSuccess({
+          nom: userObject.name,
+          photo: userObject.picture,
+          email: userObject.email,
+          token: response.credential 
+        });
+      } catch (error) {
+        console.error("Erreur décodage:", error);
+      }
     };
 
-    // Chargement dynamique du script Google Identity Services
     if (!document.getElementById("google-gsi-client")) {
       const script = document.createElement("script");
       script.id = "google-gsi-client";
@@ -53,7 +68,8 @@ const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
     }
   }, [onSuccess]);
 
-  return null; 
+  // Le bouton est là mais invisible pour l'utilisateur
+  return <div style={{ display: "none" }} id="google-hidden-btn"></div>; 
 });
 
 export default GoogleLogin;

@@ -40,42 +40,46 @@ export default function PageAbonnements() {
 
   return (
     <div className="page-abonnements">
-      <h1>Abonnements disponibles</h1>
+      <div className="affiche-abonnements"></div>
 
-      <div className="abonnements-grille">
-        {abonnements.length === 0 ? (
-          <p>Aucun abonnement trouvé</p>
-        ) : (
-          abonnements.map((abonnement) => (
-            <div key={abonnement.id} className="abonnement-carte">
-              <div className="abonnement-titre">
-                <h2>{abonnement.nom}</h2>
+      {/* Effets LED (côtés et bas) */}
+      <div className="abonnements">
+        <h1>Abonnements disponibles</h1>
+
+        <div className="abonnements-grille">
+          {abonnements.length === 0 ? (
+            <p>Aucun abonnement trouvé</p>
+          ) : (
+            abonnements.map((abonnement) => (
+              <div key={abonnement.id} className="abonnement-carte">
+                <div className="abonnement-titre">
+                  <h2>{abonnement.nom}</h2>
+                </div>
+
+                <div className="abonnement-corps">
+                  <p className="prix-texte">
+                    {abonnement.prix} $
+                    <span className="frequence">
+                      {abonnement.id === 2 ? " / 3 mois" : 
+                       [3, 4, 5].includes(abonnement.id) ? " / an" : " / mois"}
+                    </span>
+                  </p>
+
+                  <h3>Avantages :</h3>
+                  <ul>
+                    {(abonnement.avantages || []).map((avantage, index) => (
+                      <li key={index}>{avantage}</li>
+                    ))}
+                  </ul>
+
+                  <Link to={`/abonnement/${abonnement.id}`} state={{ abonnement }}>
+                    <button className="abonnement-bouton">Voir l'abonnement</button>
+                  </Link>
+                </div>
               </div>
-
-              <div className="abonnement-corps">
-                <p className="prix-texte">
-                  {abonnement.prix} $
-                  
-                  <span className="frequence">
-                    {abonnement.id === 2 ? " / 3 mois" : 
-                     [3, 4, 5].includes(abonnement.id) ? " / an" : " / mois"}
-                  </span>
-                </p>
-
-                <h3>Avantages :</h3>
-                <ul>
-                  {(abonnement.avantages || []).map((avantage, index) => (
-                    <li key={index}>{avantage}</li>
-                  ))}
-                </ul>
-
-                <Link to={`/abonnement/${abonnement.id}`} state={{ abonnement }}>
-                  <button className="abonnement-bouton">Voir l'abonnement</button>
-                </Link>
-              </div>
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

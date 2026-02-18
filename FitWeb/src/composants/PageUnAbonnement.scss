@@ -1,25 +1,81 @@
-/* --- STYLE MOBILE (Par défaut) --- */
+/* --- MOBILE --- */
+
+.affiche-abonnement {
+  width: 100%;
+  height: 350px;
+  background: linear-gradient(75deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%),
+    url("../Images/GymDeskt3.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.abonnement {
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 60px; // Augmenté pour que l'ombre du bas ne soit pas coupée par le bord de l'écran
+
+  /* --- EFFETS LEDS GAUCHE ET DROITE --- */
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  // LED GAUCHE
+  &::before { 
+    left: -100vw; 
+    box-shadow: 5px 0 15px rgba(42,137,67,0.2); 
+  }
+  
+  // LED DROITE
+  &::after { 
+    right: -100vw; 
+    box-shadow: -5px 0 15px rgba(42,137,67,0.2); 
+  }
+
+  /* --- NOUVEL EFFET : LED BAS --- */
+  box-shadow: inset 0 -15px 20px -10px rgba(42, 137, 67, 0.2), 
+              0 15px 25px -5px rgba(42, 137, 67, 0.4);
+}
+
 .abonnement-page-container {
-  padding: 20px 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   color: white;
+  margin-top: 1%;
+  overflow-x: hidden;
 
   .btn-retour {
     align-self: flex-start;
     color: #2a8943;
     text-decoration: none;
     font-size: 0.9rem;
-    margin-bottom: 20px;
+    margin: 20px 0; // Ajout d'une marge pour l'espace sous l'image
+    padding-left: 20px;
     font-family: "Anton", sans-serif;
     text-transform: uppercase;
     transition: color 0.3s ease;
+    z-index: 2;
 
     &:hover {
       color: white;
-      text-shadow: 0 0 8px #2a8943; // Petit éclat LED sur le texte au hover
+      text-shadow: 0 0 8px #2a8943;
     }
   }
 
@@ -27,17 +83,19 @@
     background: #1a1a1ae6; // Légèrement plus sombre pour faire ressortir les LEDs
     border: 1px solid #2a894355; // Bordure subtilement verte
     border-radius: 15px;
-    width: 100%;
+    width: 80%;
+    max-width: 450px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
+    z-index: 2;
 
-    /* --- EFFET LED NÉON --- */
-    // 1. Éclat proche (vibrant) 2. Éclat large (diffus) 3. Ombre portée (profondeur)
+    /* --- Effet (Néon) --- */
     box-shadow: 
-      0 0 15px rgba(42, 137, 67, 0.4), 
+      0 0 15px rgba(42, 137, 67, 0.2), 
       0 0 30px rgba(42, 137, 67, 0.2),
-      0 10px 50px rgba(0, 0, 0, 0.8);
+      0 10px 30px rgba(0, 0, 0, 0.3);
 
     .abonnement-titre {
       background-color: #2a89439b;
@@ -62,12 +120,6 @@
       .prix-container {
         text-align: center;
         margin-bottom: 25px;
-
-        .label-partir {
-          font-size: 1rem;
-          opacity: 0.8;
-          display: block; // Pour mobile, on le met au-dessus
-        }
 
         .prix-focus {
           font-size: 2.8rem;
@@ -95,8 +147,6 @@
         ul {
           list-style: none;
           padding: 0;
-          margin: 0;
-
           li {
             display: flex;
             align-items: flex-start;
@@ -137,61 +187,72 @@
           box-shadow: 0 0 20px rgba(42, 137, 67, 0.5);
           transform: translateY(-2px);
         }
-
-        &:active {
-          transform: scale(0.98);
-        }
-      }
-    }
-  }
-
-  /* --- STYLE DESKTOP (Dès 768px) --- */
-  @media (min-width: 768px) {
-    padding: 60px 40px;
-    justify-content: center;
-
-    .btn-retour {
-      position: absolute;
-      top: 40px;
-      left: 40px;
-      font-size: 1rem;
-    }
-
-    .abonnement-detail-carte {
-      max-width: 600px;
-      // On accentue l'effet LED sur desktop
-      box-shadow: 
-        0 0 25px rgba(42, 137, 67, 0.3), 
-        0 0 50px rgba(42, 137, 67, 0.15),
-        0 20px 60px rgba(0, 0, 0, 0.8);
-
-      .abonnement-titre {
-        padding: 40px;
-        h1 { font-size: 3rem; }
-      }
-
-      .abonnement-corps {
-        padding: 40px;
-
-        .prix-container {
-          .label-partir { display: inline; margin-right: 10px; }
-          .prix-focus { font-size: 3.5rem; }
-        }
-
-        .bouton-abonner {
-          font-size: 1.3rem;
-        }
       }
     }
   }
 }
 
-.page-etat {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-  color: white;
-  font-family: "Anton", sans-serif;
-  font-size: 1.5rem;
+/* --- STYLE DESKTOP (Dès 768px) --- */
+@media (min-width: 768px) {
+  .affiche-abonnement {
+    width: 100%;
+    height: 450px; // Réduit légèrement pour gagner de la place
+  }
+
+  .abonnement-page-container {
+    justify-content: flex-start;
+    
+    .btn-retour {
+      margin-top: 3%;
+      padding-left: 40px;
+      font-size: 1.1rem;
+      max-width: 900px; // Aligné sur la nouvelle largeur de carte
+    }
+
+    .abonnement-detail-carte {
+      margin-top: 2%;
+      max-width: 900px; // On élargit considérablement
+      width: 95%;
+      flex-direction: row; // Aligne le titre et le corps côte à côte
+      min-height: 400px;  // Hauteur fixe ou minimum pour contrôler le ratio
+
+      .abonnement-titre {
+        width: 40%; // Le titre prend la partie gauche
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: none;
+        border-right: 1px solid #2a894355; // Bordure verticale au lieu d'horizontale
+
+        h1 { 
+          font-size: 2.8rem; // Ajusté pour le format vertical
+          writing-mode: horizontal-tb; // Texte normal
+        }
+      }
+
+      .abonnement-corps {
+        width: 60%; // Le contenu prend la partie droite
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .prix-container {
+          text-align: left; // Aligné à gauche pour le look horizontal
+          .prix-focus { font-size: 3.2rem; }
+        }
+
+        .avantages-section {
+          margin: 20px 0;
+        }
+
+        .bouton-abonner {
+          font-size: 1.2rem;
+          align-self: flex-start; // Bouton à gauche
+          width: auto; // Prend juste la place nécessaire
+          padding: 15px 40px;
+        }
+      }
+    }
+  }
 }

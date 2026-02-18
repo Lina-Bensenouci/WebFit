@@ -35,12 +35,11 @@ export default function Entete() {
 
       if (reponse.ok) {
         const utilisateurBaseDeDonnees = await reponse.json();
-        // On enregistre les données provenant du backend (qui utilise le champ "photo")
         setUtilisateur(utilisateurBaseDeDonnees);
         localStorage.setItem("utilisateur_webfit", JSON.stringify(utilisateurBaseDeDonnees));
       }
     } catch (erreur) {
-      // Erreur de connexion au serveur (FastAPI éteint par exemple)
+      console.error("Erreur de connexion au backend:", erreur);
     } finally {
       setChargementEnCours(false);
     }
@@ -52,12 +51,14 @@ export default function Entete() {
 
     if (!utilisateur && googleLoginRef.current) {
       setChargementEnCours(true);
-      // Nettoie le cookie de blocage de Google (g_state)
       document.cookie = "g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-      // Micro-délai pour stabiliser l'affichage du prompt FedCM et éviter l'AbortError
       setTimeout(() => {
-        googleLoginRef.current.prompt();
+        try {
+          googleLoginRef.current.prompt();
+        } catch (error) {
+          console.warn("Le prompt Google a été bloqué par le navigateur.");
+        }
         setTimeout(() => setChargementEnCours(false), 3000);
       }, 200);
     }
@@ -104,9 +105,9 @@ export default function Entete() {
                 src={utilisateur.photo || utilisateur.picture} 
                 alt={utilisateur.nom}
                 className="login-icon"
-                style={{ borderRadius: "50%" }}
+                referrerPolicy="no-referrer"
+                style={{ borderRadius: "50%", objectFit: "cover" }}
               />
-              {/* Menu déconnexion bureau */}
               {afficheDeconnexion && (
                 <div className="menu-deroulant">
                   <span className="nom-utilisateur">{utilisateur.nom}</span>
@@ -122,13 +123,13 @@ export default function Entete() {
               alt="Login"
               className="login-icon"
               onClick={handleLoginClick}
+              style={{ cursor: "pointer" }}
             />
           )}
 
           <button className="burger" onClick={() => setEstOuvert(true)}>☰</button>
         </div>
 
-        {/* Composant GoogleLogin invisible */}
         <GoogleLogin ref={googleLoginRef} onSuccess={connexionBackend} />
       </header>
 
@@ -147,11 +148,13 @@ export default function Entete() {
           <a href="#aPropos" onClick={() => setEstOuvert(false)}>À propos</a>
           <a href="#horaire" onClick={() => setEstOuvert(false)}>Horaires</a>
           
-          {/* Bouton déconnexion mobile */}
+          {/* Section déconnexion mobile sans la photo de profil */}
           {utilisateur && (
-            <button className="bouton-deconnexion-mobile" onClick={gererDeconnexion}>
-              Déconnexion ({utilisateur.nom})
-            </button>
+            <div className="utilisateur-mobile-info">
+              <button className="bouton-deconnexion-mobile" onClick={gererDeconnexion}>
+                Déconnexion ({utilisateur.nom})
+              </button>
+            </div>
           )}
         </nav>
       </div>
