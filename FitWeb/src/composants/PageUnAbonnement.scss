@@ -1,0 +1,197 @@
+/* --- STYLE MOBILE (Par défaut) --- */
+.abonnement-page-container {
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: white;
+
+  .btn-retour {
+    align-self: flex-start;
+    color: #2a8943;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    font-family: "Anton", sans-serif;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: white;
+      text-shadow: 0 0 8px #2a8943; // Petit éclat LED sur le texte au hover
+    }
+  }
+
+  .abonnement-detail-carte {
+    background: #1a1a1ae6; // Légèrement plus sombre pour faire ressortir les LEDs
+    border: 1px solid #2a894355; // Bordure subtilement verte
+    border-radius: 15px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    /* --- EFFET LED NÉON --- */
+    // 1. Éclat proche (vibrant) 2. Éclat large (diffus) 3. Ombre portée (profondeur)
+    box-shadow: 
+      0 0 15px rgba(42, 137, 67, 0.4), 
+      0 0 30px rgba(42, 137, 67, 0.2),
+      0 10px 50px rgba(0, 0, 0, 0.8);
+
+    .abonnement-titre {
+      background-color: #2a89439b;
+      padding: 25px 15px;
+      text-align: center;
+      border-bottom: 1px solid #2a894355;
+
+      h1 {
+        margin: 0;
+        font-family: "Anton", sans-serif;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    .abonnement-corps {
+      padding: 25px;
+
+      .prix-container {
+        text-align: center;
+        margin-bottom: 25px;
+
+        .label-partir {
+          font-size: 1rem;
+          opacity: 0.8;
+          display: block; // Pour mobile, on le met au-dessus
+        }
+
+        .prix-focus {
+          font-size: 2.8rem;
+          font-weight: bold;
+          color: #2a8943;
+          text-shadow: 0 0 10px rgba(42, 137, 67, 0.3); // Effet LED sur le prix
+        }
+        
+        .frequence-detail {
+          font-size: 1rem;
+          opacity: 0.8;
+        }
+      }
+
+      .avantages-section {
+        h3 {
+          font-family: "Anton", sans-serif;
+          font-size: 1.1rem;
+          text-transform: uppercase;
+          border-bottom: 1px solid #333;
+          padding-bottom: 8px;
+          margin-bottom: 15px;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            line-height: 1.4;
+
+            &::before {
+              content: "✓";
+              color: #2a8943;
+              font-weight: bold;
+              font-size: 1.1rem;
+              flex-shrink: 0;
+              text-shadow: 0 0 5px #2a8943; // Crochet lumineux
+            }
+          }
+        }
+      }
+
+      .bouton-abonner {
+        background: #2a89439b;
+        color: white;
+        border: 1px solid #2a8943; // Bordure pour l'effet bouton LED
+        padding: 15px;
+        width: 100%;
+        margin-top: 20px;
+        font-family: "Anton", sans-serif;
+        font-size: 1.1rem;
+        border-radius: 15px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(42, 137, 67, 0.2);
+
+        &:hover {
+          background-color: #2a8943d7;
+          box-shadow: 0 0 20px rgba(42, 137, 67, 0.5);
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+    }
+  }
+
+  /* --- STYLE DESKTOP (Dès 768px) --- */
+  @media (min-width: 768px) {
+    padding: 60px 40px;
+    justify-content: center;
+
+    .btn-retour {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      font-size: 1rem;
+    }
+
+    .abonnement-detail-carte {
+      max-width: 600px;
+      // On accentue l'effet LED sur desktop
+      box-shadow: 
+        0 0 25px rgba(42, 137, 67, 0.3), 
+        0 0 50px rgba(42, 137, 67, 0.15),
+        0 20px 60px rgba(0, 0, 0, 0.8);
+
+      .abonnement-titre {
+        padding: 40px;
+        h1 { font-size: 3rem; }
+      }
+
+      .abonnement-corps {
+        padding: 40px;
+
+        .prix-container {
+          .label-partir { display: inline; margin-right: 10px; }
+          .prix-focus { font-size: 3.5rem; }
+        }
+
+        .bouton-abonner {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+}
+
+.page-etat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: white;
+  font-family: "Anton", sans-serif;
+  font-size: 1.5rem;
+}

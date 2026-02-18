@@ -1,6 +1,6 @@
 import "./PageUnAbonnement.scss";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const API_URL = "http://localhost:8000";
 
@@ -8,7 +8,7 @@ export default function PageUnAbonnement() {
   const { id } = useParams();
   const [abonnements, setAbonnements] = useState([]);
   const [erreur, setErreur] = useState(null);
-  const [termine, setTermine] = useState(false); // indique que fetch est terminé
+  const [termine, setTermine] = useState(false);
 
   useEffect(() => {
     const fetchAbonnements = async () => {
@@ -20,36 +20,54 @@ export default function PageUnAbonnement() {
       } catch (err) {
         setErreur(err.message);
       } finally {
-        setTermine(true); // on marque que fetch est fini
+        setTermine(true);
       }
     };
-
     fetchAbonnements();
   }, []);
 
-  if (erreur) return <p>Erreur : {erreur}</p>;
-
-  // On attend que fetch soit terminé avant d'afficher "aucun abonnement trouvé"
+  if (erreur) return <div className="page-etat"><p>Erreur : {erreur}</p></div>;
   if (!termine) return null;
 
   const abonnement = abonnements.find(a => a.id === parseInt(id));
+  if (!abonnement) return <div className="page-etat"><p>Aucun abonnement trouvé.</p></div>;
 
-  if (!abonnement) return <p>Aucun abonnement trouvé.</p>;
+  // Définition des types d'abonnements pour l'affichage
+  const estAnnuel = [3, 4, 5, 6].includes(abonnement.id);
+  const estTrimestriel = abonnement.id === 2;
 
   return (
-    <div className="abonnement-page">
-      <h1>{abonnement.nom}</h1>
-      <p>Prix : {abonnement.prix} $</p>
-      <p>Durée : {abonnement.duree || "Non spécifiée"}</p>
+    <div className="abonnement-page-container">
+      {/* Bouton retour vers la page précédente */}
+      <Link to="/abonnements" className="btn-retour">← Retour aux offres</Link>
 
-      <h3>Avantages :</h3>
-      <ul>
-        {(abonnement.avantages || []).map((avantage, index) => (
-          <li key={index}>{avantage}</li>
-        ))}
-      </ul>
+      <div className="abonnement-detail-carte">
+        <div className="abonnement-titre">
+          <h1>{abonnement.nom}</h1>
+        </div>
 
-      <button>S'abonner maintenant</button>
+        <div className="abonnement-corps">
+          <div className="prix-container">
+            
+            <span className="prix-focus">{abonnement.prix}$</span>
+            
+            <span className="frequence-detail">
+              {estAnnuel ? " / an" : estTrimestriel ? " / 3 mois" : " / mois"}
+            </span>
+          </div>
+
+          <div className="avantages-section">
+            <h3>Ce qui est inclus :</h3>
+            <ul>
+              {(abonnement.avantages || []).map((avantage, index) => (
+                <li key={index}>{avantage}</li>
+              ))}
+            </ul>
+          </div>
+
+          <button className="bouton-abonner">S'abonner maintenant</button>
+        </div>
+      </div>
     </div>
   );
 }

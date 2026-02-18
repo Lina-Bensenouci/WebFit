@@ -30,14 +30,13 @@ h1, h2, h3, h4, h5, button{
   border-radius: 15px;
   overflow: hidden;
 
-/* Style ultra-stylé pour les 3 phrases en haut à gauche */
   .hero-phrases {
     position: absolute;
     top: 35px;
     left: 40px;
     display: flex;
     flex-direction: column;
-    border-left: 3px solid #2a8943; /* Ligne de structure élégante */
+    border-left: 3px solid #2a8943;
     padding-left: 15px;
     gap: 4px;
     cursor: default;
@@ -45,7 +44,7 @@ h1, h2, h3, h4, h5, button{
     span {
       color: white;
       font-family: "Anton", sans-serif;
-      font-size: 1.8rem; /* Un peu plus grand pour l'impact */
+      font-size: 1.8rem;
       text-transform: uppercase;
       line-height: 0.9;
       letter-spacing: 1px;
@@ -59,7 +58,7 @@ h1, h2, h3, h4, h5, button{
       
       &:nth-child(2) { 
         opacity: 0.7; 
-        margin-left: 10px; /* Décalage progressif */
+        margin-left: 10px;
         font-size: 1.3rem;
       }
       
@@ -146,8 +145,8 @@ h1, h2, h3, h4, h5, button{
   display: flex;
   flex-direction: column;
   padding: 20px;
-  align-items: center;      /* Centre tout horizontalement */
-  text-align: center;       /* Centre les textes */
+  align-items: center; /* Centre tout horizontalement */
+  text-align: center;  /* Centre les textes */
   position: relative;
   width: 100%;
   max-width: 1900px;
@@ -218,81 +217,133 @@ h1, h2, h3, h4, h5, button{
       align-items: center;
     }
 
-  .abonnement-carte {
-  background: #262626a1;
-  border: 1px solid #333;
+.abonnement-carte {
+  background: #1a1a1ae6;
+  border: 1px solid #2a894333;
   border-radius: 12px;
-
-  padding: 0; 
+  padding: 0;
   width: 90%;
   max-width: 320px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
   color: white;
-  
-  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+
+  /* --- Effet de base (Lueur douce) --- */
+  box-shadow: 0 0 15px rgba(42, 137, 67, 0.1), 0 5px 15px rgba(0, 0, 0, 0.5);
 
   &:hover {
     transform: translateY(-10px);
     border-color: #2A8943;
-    background: #333333a9;
-    .abonnement-titre{
-        background-color: #2a8943d7
-      }
+    background: #262626e6;
+
+    /* --- Effet survol (Néon) --- */
+    box-shadow: 
+      0 0 20px rgba(42, 137, 67, 0.4), 
+      0 0 40px rgba(42, 137, 67, 0.1),
+      0 15px 35px rgba(0, 0, 0, 0.7);
+
+    .abonnement-titre {
+      background-color: #2a8943d7;
+    }
   }
 
   .abonnement-titre {
     background-color: #2a89439b;
     color: white;
-    padding: 20px 15px; 
+    padding: 20px 15px;
     margin: 0;
     text-align: center;
+    transition: background-color 0.3s ease;
+    border-bottom: 1px solid #2a894333;
 
-    h2 { 
-      color: white; 
-      font-family: "Anton", sans-serif; 
-      margin: 0; 
+    h2 {
+      color: white;
+      font-family: "Anton", sans-serif;
+      margin: 0;
       text-transform: uppercase;
+      font-size: 1.5rem;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
   }
 
-  p, h3, ul, .abonnement-bouton-container {
-    padding-left: 25px;
-    padding-right: 25px;
-  }
+    .abonnement-corps {
+      display: flex;
+      flex-direction: column;
 
-  p { margin-top: 20px; font-weight: bold; font-size: 1.2rem; }
+      p, h3, ul {
+        padding-left: 25px;
+        padding-right: 25px;
+      }
 
-  h3 {
-    font-size: 1rem;
-    margin-top: 15px;
-    text-align: left;
-    border-bottom: 1px solid #333;
-    padding-bottom: 5px;
-  }
+      p {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: center;
+        color: #2a8943;
+      }
 
-  ul { 
-    list-style: none; padding-left: 25px; text-align: left; margin: 15px 0;
-    li { margin-bottom: 8px; }
-    li::before { content: "✓ "; color: #2A8943; font-weight: bold; }
-  }
+      h3 {
+        font-size: 1rem;
+        margin-top: 15px;
+        text-align: left;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        text-transform: uppercase;
+        font-family: "Anton", sans-serif;
+        letter-spacing: 0.5px;
+      }
 
-  .abonnement-bouton {
-    background: #2a89439b;
-    color: white;
-    border: none;
-    padding: 12px;
-    width: calc(100% - 50px); /* Ajusté pour compenser le padding de 25px de chaque côté */
-    margin: 0 25px 25px 25px; /* Marge en bas pour finir proprement */
-    font-family: "Anton", sans-serif;
-    border-radius: 15px;
-    cursor: pointer;
-    text-transform: uppercase;
+      ul {
+        list-style: none;
+        text-align: left;
+        margin: 15px 0;
+        padding-bottom: 10px;
 
-    &:hover {
-      background-color: #2a8943d7
+        li {
+          margin-bottom: 8px;
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+
+          &::before {
+            content: "✓";
+            color: #2A8943;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(42, 137, 67, 0.8); // Crochet brillant
+          }
+        }
+      }
+
+      .abonnement-bouton {
+        background: #2a89439b;
+        color: white;
+        border: 1px solid #2a894355; // Bordure néon subtile
+        padding: 12px;
+        width: calc(100% - 50px);
+        margin: 0 25px 25px 25px;
+        font-family: "Anton", sans-serif;
+        font-size: 1.1rem;
+        border-radius: 15px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: #2a8943d7;
+          transform: translateY(-3px);
+          box-shadow: 0 0 15px rgba(42, 137, 67, 0.5); // Bouton qui s'allume
+          border-color: #2a8943;
+        }
+
+          &:active {
+            transform: scale(0.96);
+          }
+        }
+      }
     }
-  }
-}
   }
 }
 

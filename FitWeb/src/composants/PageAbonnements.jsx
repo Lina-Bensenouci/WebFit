@@ -7,7 +7,7 @@ const API_URL = "http://localhost:8000";
 export default function PageAbonnements() {
   const [abonnements, setAbonnements] = useState([]);
   const [erreur, setErreur] = useState(null);
-  const [termine, setTermine] = useState(false); // indique que fetch est terminé
+  const [termine, setTermine] = useState(false);
 
   useEffect(() => {
     const chargerAbonnements = async () => {
@@ -17,7 +17,11 @@ export default function PageAbonnements() {
           throw new Error(`Erreur serveur (${response.status})`);
         }
         const data = await response.json();
-        setAbonnements(data || []);
+        
+        // On exclut l'ID 6 comme demandé
+        const filteredData = (data || []).filter(abo => abo.id !== 6);
+        
+        setAbonnements(filteredData);
       } catch (err) {
         setErreur(err.message);
       } finally {
@@ -29,37 +33,50 @@ export default function PageAbonnements() {
   }, []);
 
   if (erreur) {
-    return <p className="erreur">Erreur lors du chargement : {erreur}</p>;
+    return <div className="page-etat"><p className="erreur">Erreur : {erreur}</p></div>;
   }
 
-  // On attend que fetch soit terminé avant d'afficher "Aucun abonnement trouvé"
   if (!termine) return null;
 
   return (
     <div className="page-abonnements">
       <h1>Abonnements disponibles</h1>
 
-      {abonnements.length === 0 ? (
-        <p>Aucun abonnement trouvé</p>
-      ) : (
-        abonnements.map((abonnement) => (
-          <div key={abonnement.id} className="abonnement-carte">
-            <h2>{abonnement.nom}</h2>
-            <p>Prix : {abonnement.prix} $</p>
+      <div className="abonnements-grille">
+        {abonnements.length === 0 ? (
+          <p>Aucun abonnement trouvé</p>
+        ) : (
+          abonnements.map((abonnement) => (
+            <div key={abonnement.id} className="abonnement-carte">
+              <div className="abonnement-titre">
+                <h2>{abonnement.nom}</h2>
+              </div>
 
-            <h3>Avantages :</h3>
-            <ul>
-              {(abonnement.avantages || []).map((avantage, index) => (
-                <li key={index}>{avantage}</li>
-              ))}
-            </ul>
+              <div className="abonnement-corps">
+                <p className="prix-texte">
+                  {abonnement.prix} $
+                  
+                  <span className="frequence">
+                    {abonnement.id === 2 ? " / 3 mois" : 
+                     [3, 4, 5].includes(abonnement.id) ? " / an" : " / mois"}
+                  </span>
+                </p>
 
-            <Link to={`/abonnement/${abonnement.id}`} state={{ abonnement }}>
-              <button className="abonnement-bouton">Voir l'abonnement</button>
-            </Link>
-          </div>
-        ))
-      )}
+                <h3>Avantages :</h3>
+                <ul>
+                  {(abonnement.avantages || []).map((avantage, index) => (
+                    <li key={index}>{avantage}</li>
+                  ))}
+                </ul>
+
+                <Link to={`/abonnement/${abonnement.id}`} state={{ abonnement }}>
+                  <button className="abonnement-bouton">Voir l'abonnement</button>
+                </Link>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
