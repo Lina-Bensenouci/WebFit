@@ -30,7 +30,7 @@ export default function Footer() {
       </div>
 
       {/* Tableau horaires */}
-      <div className="footer-horaires">
+      <div id="horaire" className="footer-horaires">
         <h4 className="footer-title">Horaires</h4>
         <table>
           <thead>

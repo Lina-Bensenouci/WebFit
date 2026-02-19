@@ -38,10 +38,18 @@ export default function PageUnAbonnement() {
 
   return (
     <div className="abonnement-page-container">
-      <div className="affiche-abonnement"></div>
+      {/* SECTION AFFICHE AVEC TITRE DYNAMIQUE */}
+      <div className="affiche-abonnement">
+        <div className="hero-phrases">
+          <span>WebFit</span>
+          <span>Ton Panier</span>
+          <span>{abonnement.nom}.</span>
+        </div>
+      </div>
+
       <div className="abonnement">
-      {/* Bouton retour vers la page précédente - Placé ici pour être sous l'affiche */}
-      <Link to="/abonnements" className="btn-retour">← Retour aux offres</Link>
+        {/* Bouton retour vers la page précédente */}
+        <Link to="/abonnements" className="btn-retour">← Retour aux offres</Link>
 
         <div className="abonnement-detail-carte">
           <div className="abonnement-titre">

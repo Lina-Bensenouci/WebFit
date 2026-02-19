@@ -95,6 +95,37 @@ export default function Accueil() {
             ))}
           </div>
         </div>
+       {/* SECTION : CE QUE WEBFIT VOUS RÉSERVE */}
+        <div className="conteneur-reserve">
+          <div className="en-tete-reserve">
+            <h1>Tout ce que WebFit te réserve</h1>
+          </div>
+
+          {/* Sous-section : Équipements */}
+          <div className="bloc-reserve" id="equipements">
+            <h2>Entraîne-toi sans pression</h2>
+              <p>
+                Chez WebFit, pas de jugement, juste un espace sûr pour te dépasser à ton rythme et te sentir bien dès le premier jour.
+              </p>
+            <div className="image-reserve img-equipements"></div>
+          </div>
+
+          {/* Sous-section : Cours en groupe */}
+          <div className="bloc-reserve" id="cours-groupe">
+            <h2>Cours en groupe</h2>
+            <p> Rejoignez notre communauté dynamique ! Des séances variées et énergiques animées par des coachs passionnés pour brûler des calories dans le plaisir. </p>
+            <div className="image-reserve img-cours"></div>
+          </div>
+
+          {/* Sous-section : Section femme */}
+          <div className="bloc-reserve" id="section-femme">
+            <h2>Section pour femme</h2>
+            <p>
+              Profite de notre section femme, un espace intime et accueillant pour t’entraîner en toute confiance, à ton rythme.
+            </p>
+            <div className="image-reserve img-femme"></div>
+          </div>
+        </div>
       </div>
     </div>
   );

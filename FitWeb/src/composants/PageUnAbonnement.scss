@@ -1,9 +1,27 @@
-/* --- MOBILE --- */
+/* --- MOBILE (PAR DÉFAUT) --- */
+
+.page-etat {
+  color: white;
+  text-align: center;
+  padding: 50px;
+  font-family: "Anton", sans-serif;
+}
+
+.abonnement-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: white;
+  margin-top: 1%;
+  overflow-x: hidden;
+}
 
 .affiche-abonnement {
   width: 100%;
   height: 350px;
-  background: linear-gradient(75deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%),
+  // Gradient renforcé pour faire ressortir le titre
+  background: linear-gradient(75deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 60%),
     url("../Images/GymDeskt3.png");
   background-size: cover;
   background-position: center;
@@ -14,6 +32,43 @@
   box-sizing: border-box;
   border-radius: 15px;
   overflow: hidden;
+  cursor: default;
+
+  /* Style des phrases sur l'affiche (Effet escalier) */
+  .hero-phrases {
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid #2a8943;
+    padding-left: 15px;
+    gap: 4px;
+    transition: all 0.4s ease;
+
+    span {
+      color: white;
+      font-family: "Anton", sans-serif;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      line-height: 0.9;
+      letter-spacing: 1px;
+      transition: all 0.4s ease;
+      
+      &:nth-child(1) { opacity: 0.4; font-size: 1.4rem; }
+      &:nth-child(2) { opacity: 0.7; margin-left: 10px; font-size: 1.3rem; }
+      &:nth-child(3) { 
+        color: #2a8943; 
+        opacity: 1;
+        margin-left: 20px;
+        text-shadow: 2px 2px 12px rgba(42, 137, 67, 0.6);
+        font-size: 1.6rem;
+      }
+    }
+
+    /* --- EFFET HOVER IDENTIQUE À L'ACCUEIL --- */
+    &:hover span {
+      margin-left: 0 !important;
+      opacity: 1 !important;
+    }
+  }
 }
 
 .abonnement {
@@ -23,7 +78,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 60px; // Augmenté pour que l'ombre du bas ne soit pas coupée par le bord de l'écran
+  padding-bottom: 60px; 
 
   /* --- EFFETS LEDS GAUCHE ET DROITE --- */
   &::before, &::after {
@@ -50,23 +105,13 @@
   /* --- NOUVEL EFFET : LED BAS --- */
   box-shadow: inset 0 -15px 20px -10px rgba(42, 137, 67, 0.2), 
               0 15px 25px -5px rgba(42, 137, 67, 0.4);
-}
-
-.abonnement-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  color: white;
-  margin-top: 1%;
-  overflow-x: hidden;
 
   .btn-retour {
     align-self: flex-start;
     color: #2a8943;
     text-decoration: none;
     font-size: 0.9rem;
-    margin: 20px 0; // Ajout d'une marge pour l'espace sous l'image
+    margin: 20px 0; 
     padding-left: 20px;
     font-family: "Anton", sans-serif;
     text-transform: uppercase;
@@ -80,8 +125,8 @@
   }
 
   .abonnement-detail-carte {
-    background: #1a1a1ae6; // Légèrement plus sombre pour faire ressortir les LEDs
-    border: 1px solid #2a894355; // Bordure subtilement verte
+    background: #1a1a1ae6; 
+    border: 1px solid #2a894355; 
     border-radius: 15px;
     width: 80%;
     max-width: 450px;
@@ -125,7 +170,7 @@
           font-size: 2.8rem;
           font-weight: bold;
           color: #2a8943;
-          text-shadow: 0 0 10px rgba(42, 137, 67, 0.3); // Effet LED sur le prix
+          text-shadow: 0 0 10px rgba(42, 137, 67, 0.3);
         }
         
         .frequence-detail {
@@ -161,7 +206,7 @@
               font-weight: bold;
               font-size: 1.1rem;
               flex-shrink: 0;
-              text-shadow: 0 0 5px #2a8943; // Crochet lumineux
+              text-shadow: 0 0 5px #2a8943;
             }
           }
         }
@@ -170,7 +215,7 @@
       .bouton-abonner {
         background: #2a89439b;
         color: white;
-        border: 1px solid #2a8943; // Bordure pour l'effet bouton LED
+        border: 1px solid #2a8943; 
         padding: 15px;
         width: 100%;
         margin-top: 20px;
@@ -196,60 +241,60 @@
 @media (min-width: 768px) {
   .affiche-abonnement {
     width: 100%;
-    height: 450px; // Réduit légèrement pour gagner de la place
+    height: 440px; // Aligné sur la hauteur de PageAbonnements
+    padding-left: 60px;
+
+    .hero-phrases {
+      span {
+        line-height: 0.85;
+        &:nth-child(1) { font-size: 2.9rem !important; }
+        &:nth-child(2) { font-size: 3.4rem !important; margin-left: 20px; }
+        &:nth-child(3) { font-size: 4.4rem !important; margin-left: 40px; }
+      }
+      
+      &:hover span {
+        margin-left: 0 !important;
+      }
+    }
   }
 
   .abonnement-page-container {
-    justify-content: flex-start;
-    
     .btn-retour {
       margin-top: 3%;
       padding-left: 40px;
       font-size: 1.1rem;
-      max-width: 900px; // Aligné sur la nouvelle largeur de carte
+      max-width: 900px; 
     }
 
     .abonnement-detail-carte {
       margin-top: 2%;
-      max-width: 900px; // On élargit considérablement
+      max-width: 900px; 
       width: 95%;
-      flex-direction: row; // Aligne le titre et le corps côte à côte
-      min-height: 400px;  // Hauteur fixe ou minimum pour contrôler le ratio
+      flex-direction: row; 
+      min-height: 400px;  
 
       .abonnement-titre {
-        width: 40%; // Le titre prend la partie gauche
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 40%; 
         border-bottom: none;
-        border-right: 1px solid #2a894355; // Bordure verticale au lieu d'horizontale
+        border-right: 1px solid #2a894355; 
 
         h1 { 
-          font-size: 2.8rem; // Ajusté pour le format vertical
-          writing-mode: horizontal-tb; // Texte normal
+          font-size: 2.8rem; 
         }
       }
 
       .abonnement-corps {
-        width: 60%; // Le contenu prend la partie droite
+        width: 60%; 
         padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
 
         .prix-container {
-          text-align: left; // Aligné à gauche pour le look horizontal
+          text-align: left; 
           .prix-focus { font-size: 3.2rem; }
-        }
-
-        .avantages-section {
-          margin: 20px 0;
         }
 
         .bouton-abonner {
           font-size: 1.2rem;
-          align-self: flex-start; // Bouton à gauche
-          width: auto; // Prend juste la place nécessaire
+          width: auto; 
           padding: 15px 40px;
         }
       }
