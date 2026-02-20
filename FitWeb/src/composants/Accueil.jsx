@@ -9,7 +9,7 @@ export default function Accueil() {
     fetch("http://localhost:8000/abonnements")
       .then((res) => res.json())
       .then((data) => {
-        // On sélectionne précisément les IDs 1, 2 et 6
+        // Sélectionne précisément les IDs 1, 2 et 6
         const selectionnes = data
           .filter(abo => [1, 2, 6].includes(abo.id))
           .sort((a, b) => {

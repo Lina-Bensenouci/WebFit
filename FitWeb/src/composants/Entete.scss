@@ -1,4 +1,5 @@
-/* Mobile first */
+/* --- MOBILE (PAR DÉFAUT) --- */
+/* Entete.scss */
 .entete {
   height: 60px;
   color: white;
@@ -7,7 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* Ajouté pour le positionnement du menu */
+  position: relative; /* Pour le positionnement du menu */
 }
 
 .entete-logo img {
@@ -24,9 +25,9 @@
   display: flex;
   align-items: center;
   gap: 1px; /* espace entre burger et login */
-  position: relative; /* Ajouté pour le menu déconnexion */
+  position: relative; /* Pour le menu déconnexion */
 
-  /* --- AJOUT POUR DÉCONNEXION --- */
+  /* --- DÉCONNEXION --- */
   .conteneur-utilisateur {
     position: relative;
     display: flex;
@@ -67,7 +68,6 @@
       }
     }
   }
-  /* --- FIN AJOUT --- */
 }
 
 .burger {
@@ -95,19 +95,17 @@
   height: 100vh;
     background-color: #1a1a1a;
 
-  /* Grain + gradient plus foncé */
+  /* Grain + gradient foncé */
   background-image: 
     radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
     radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, #0d0d0d, #1a1a1a); /* gradient plus sombre */
+    linear-gradient(to bottom, #0d0d0d, #1a1a1a);
 
   /* Taille des calques */
   background-size: 10px 10px, 10px 10px, 100% 100%;
 
   /* Position des calques */
   background-position: 0 0, 5px 5px, 0 0;
-
-  /* Répétition */
   background-repeat: repeat, repeat, no-repeat;
   color: white;
   transform: translateX(100%);
@@ -116,14 +114,14 @@
   /* Scrollable */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* NE PAS centrer verticalement */
+  justify-content: flex-start; /* Ne pas centrer verticalement */
   align-items: center;
-  overflow-y: auto; /* permet de scroller si le contenu dépasse */
-  padding-top: 50px; /* optionnel : espace en haut */
+  overflow-y: auto; /* Permet de scroller si le contenu dépasse */
+  padding-top: 50px;
   padding-bottom: 50px;
 }
 
-/* (Deconnexion) */
+/* DECONNEXION */
 .bouton-deconnexion-mobile {
   margin-top: 20px;
   background: none;
@@ -208,7 +206,7 @@ nav .router-link:focus {
   }
 }
 
-/* Lien actif (page actuelle) */
+/* Lien actif */
 nav a.active,
 nav .router-link.active {
   color: #2A8943;
@@ -224,7 +222,7 @@ nav .router-link.active {
   display: none; /* caché par défaut */
 }
 
-/* Desktop (Garde tes media queries intactes) */
+/* --- STYLE DESKTOP (Dès 768px) --- */
 @media (min-width: 768px) and (max-width: 1090px) {
 
   .burger { 
@@ -262,6 +260,7 @@ nav .router-link.active {
   }
 }
 
+/* --- STYLE GRAND ÉCRAN (Dès 1091px) --- */
 @media (min-width: 1091px) {
 
   .burger { 

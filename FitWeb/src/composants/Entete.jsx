@@ -1,20 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import { HashLink } from 'react-router-hash-link'; // Utilisation de HashLink simple
+import { HashLink } from 'react-router-hash-link';
+
+// SECTION : ASSETS ET COMPOSANTS
 import "./Entete.scss";
 import LogoWebFit from "../Images/Logo4WebFit.png";
 import Login from "../Images/Login2.png";
 import GoogleLogin from "./GoogleLogin.jsx";
 
 export default function Entete() {
+  // SECTION : ÉTATS (STATES)
   const [estOuvert, setEstOuvert] = useState(false);
   const [utilisateur, setUtilisateur] = useState(null);
   const [afficheDeconnexion, setAfficheDeconnexion] = useState(false);
   const [chargementEnCours, setChargementEnCours] = useState(false);
 
+  // SECTION : RÉFÉRENCES ET ROUTAGE
   const googleLoginRef = useRef();
   const location = useLocation(); 
 
+  // SECTION : EFFETS (USEEFFECT)
   useEffect(() => {
     const infosSauvegardees = localStorage.getItem("utilisateur_webfit");
     if (infosSauvegardees) {
@@ -22,6 +27,7 @@ export default function Entete() {
     }
   }, []);
 
+  // SECTION : LOGIQUE D'AUTHENTIFICATION
   const connexionBackend = async (donneesGoogle) => {
     try {
       const reponse = await fetch("http://localhost:8000/auth/google", {
@@ -76,13 +82,16 @@ export default function Entete() {
 
   return (
     <>
+      {/* SECTION : ENTÊTE PRINCIPALE (DESKTOP) */}
       <header className="entete">
+        
+        {/* LOGO */}
         <div className="entete-logo">
           <Link to="/"><img src={LogoWebFit} alt="WebFit" /></Link>
         </div>
 
+        {/* NAVIGATION DESKTOP */}
         <nav className="menu-desktop-nav">
-          {/* Accueil : Uniquement si on est sur / sans hash */}
           <Link 
             to="/" 
             className={(location.pathname === "/" && location.hash === "") ? "active" : ""}
@@ -98,7 +107,6 @@ export default function Entete() {
             Cours en groupe
           </NavLink>
           
-          {/* À Propos : Classe active ajoutée manuellement selon le hash */}
           <HashLink 
             smooth 
             to="/#aPropos" 
@@ -108,7 +116,6 @@ export default function Entete() {
             À propos
           </HashLink>
           
-          {/* Horaires : Classe active ajoutée manuellement selon le hash */}
           <HashLink 
             smooth 
             to="/#horaire" 
@@ -119,8 +126,10 @@ export default function Entete() {
           </HashLink>
         </nav>
 
+        {/* SECTION DROITE (LOGIN & BURGER) */}
         <div className="entete-droite">
           {utilisateur ? (
+            /* INTERFACE UTILISATEUR CONNECTÉ */
             <div 
               className="conteneur-utilisateur"
               onMouseEnter={() => setAfficheDeconnexion(true)}
@@ -143,6 +152,7 @@ export default function Entete() {
               )}
             </div>
           ) : (
+            /* ICÔNE LOGIN DÉCONNECTÉ */
             <img
               src={Login}
               alt="Login"
@@ -155,17 +165,20 @@ export default function Entete() {
           <button className="burger" onClick={() => setEstOuvert(true)}>☰</button>
         </div>
 
+        {/* COMPOSANT GOOGLE LOGIN (HIDDEN) */}
         <GoogleLogin ref={googleLoginRef} onSuccess={connexionBackend} />
       </header>
 
-      {/* Menu mobile */}
+      {/* SECTION : MENU MOBILE */}
       <div className={`menu ${estOuvert ? "open" : ""}`}>
         <button className="close" onClick={() => setEstOuvert(false)}>✕</button>
+        
         <div className="menu-logo">
           <Link to="/"><img src={LogoWebFit} alt="WebFit" onClick={() => setEstOuvert(false)} /></Link>
         </div>
 
         <nav>
+          {/* LIENS DE NAVIGATION MOBILE */}
           <Link 
             to="/" 
             onClick={() => setEstOuvert(false)}
@@ -194,6 +207,7 @@ export default function Entete() {
             Horaires
           </HashLink>
           
+          {/* DÉCONNEXION MOBILE */}
           {utilisateur && (
             <div className="utilisateur-mobile-info">
               <button className="bouton-deconnexion-mobile" onClick={gererDeconnexion}>

@@ -36,7 +36,7 @@ export default function PageAbonnements() {
 
   return (
     <div className="page-abonnements">
-      {/* SECTION AFFICHE AVEC TITRE STYLISÉ */}
+      {/* SECTION AFFICHE AVEC TITRE */}
       <div className="affiche-abonnements">
         <div className="hero-phrases">
           <span>WebFit</span>

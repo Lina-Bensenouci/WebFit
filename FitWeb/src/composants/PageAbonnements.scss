@@ -1,3 +1,5 @@
+/* --- MOBILE (PAR DÉFAUT) --- */
+/* PageAbonnements.scss */
 .page-abonnements {
   margin-top: 1%;
 }
@@ -5,7 +7,6 @@
 .affiche-abonnements {
   width: 100%;
   height: 350px;
-  // Gradient ajusté pour plus de contraste sur le texte
   background: linear-gradient(75deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 60%),
     url("../Images/GymCardioDeskt.png");
   background-size: cover;
@@ -19,7 +20,7 @@
   overflow: hidden;
   cursor: default; // Curseur par défaut
 
-  /* Style des phrases sur l'affiche (Effet escalier) */
+  /* Style des phrases sur l'affiche */
   .hero-phrases {
     display: flex;
     flex-direction: column;
@@ -37,14 +38,21 @@
       letter-spacing: 1px;
       transition: all 0.4s ease;
       
-      &:nth-child(1) { opacity: 0.4; font-size: 1.4rem; }
-      &:nth-child(2) { opacity: 0.7; margin-left: 10px; font-size: 1.3rem; }
+      &:nth-child(1) { 
+        opacity: 0.4; 
+        font-size: 1.6rem; 
+      }
+      &:nth-child(2) { 
+        opacity: 0.7; 
+        margin-left: 10px; 
+        font-size: 1.5rem; 
+      }
       &:nth-child(3) { 
         color: #2a8943; 
         opacity: 1;
         margin-left: 20px;
-        text-shadow: 2px 2px 12px rgba(42, 137, 67, 0.6);
-        font-size: 1.6rem;
+        text-shadow: 2px 2px 12px #07180cbb;
+        font-size: 1.8rem;
       }
     }
 
@@ -117,7 +125,7 @@
       border-color: #2A8943;
       background: #262626; 
 
-      /* --- Effet survol (Néon) --- */
+      /* --- Effet hover (Néon) --- */
       box-shadow: 
         0 0 20px rgba(42, 137, 67, 0.5), 
         0 0 40px rgba(42, 137, 67, 0.2),
@@ -197,7 +205,7 @@
             content: "✓";
             color: #2A8943;
             font-weight: bold;
-            text-shadow: 0 0 5px #2A8943; // Crochet lumineux
+            text-shadow: 0 0 5px #2A8943; // Crochets lumineux
           }
         }
       }
@@ -219,7 +227,7 @@
         &:hover {
           background-color: #2a8943d7;
           transform: translateY(-3px);
-          box-shadow: 0 0 15px rgba(42, 137, 67, 0.4); // Le bouton brille aussi
+          box-shadow: 0 0 15px rgba(42, 137, 67, 0.4); // Bouton brille
         }
 
         &:active {
@@ -230,7 +238,8 @@
   }
 }
 
-/* --- DESKTOP --- */
+
+/* --- STYLE DESKTOP (Dès 768px) --- */
 @media (min-width: 768px) {
   .affiche-abonnements {
     height: 440px;
@@ -239,9 +248,18 @@
     .hero-phrases {
       span {
         line-height: 0.85;
-        &:nth-child(1) { font-size: 2.9rem !important; }
-        &:nth-child(2) { font-size: 3.4rem !important; margin-left: 20px; }
-        &:nth-child(3) { font-size: 4.4rem !important; margin-left: 40px; }
+        &:nth-child(1) { 
+          font-size: 2.9rem !important; 
+        }
+        &:nth-child(2) { 
+          font-size: 3.4rem !important; 
+          margin-left: 20px; 
+        }
+        &:nth-child(3) { 
+          font-size: 4.4rem !important; 
+          margin-left: 40px; 
+          text-shadow: 2px 2px 12px rgba(42, 137, 67, 0.6); 
+        }
       }
       
       &:hover span {

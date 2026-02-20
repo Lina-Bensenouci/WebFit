@@ -1,6 +1,5 @@
-/* Pied2Page.scss */
-
-/* Mobile-first */
+/* --- MOBILE (PAR DÉFAUT) --- */
+/* Pied2page.scss */
 .footer {
   display: flex;
   flex-direction: row; /* row par défaut */
@@ -28,12 +27,12 @@
         text-decoration: none;
         font-size: 0.9rem;
         &:hover {
-          color: #2A8943;    /* devient vert */
-          transform: scale(1.04);  /* petite augmentation */
+          color: #2A8943;
+          transform: scale(1.04);
         }
         &.active {
-          color: #2A8943;    /* devient vert */
-          transform: scale(1.04);  /* petite augmentation */
+          color: #2A8943;
+          transform: scale(1.04);
         }
       }
     }
@@ -74,7 +73,7 @@
   }
 }
 
-/* Desktop (≥768px) */
+/* --- STYLE DESKTOP (Dès 768px) --- */
 @media (min-width: 768px) {
   .footer {
     gap: 30px;

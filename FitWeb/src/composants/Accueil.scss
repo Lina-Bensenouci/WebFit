@@ -1,3 +1,4 @@
+/* --- MOBILE (PAR DÉFAUT) --- */
 /* Accueil.scss */
 html, body {
   margin: 0;
@@ -54,8 +55,15 @@ h2, h3, h4, h5, button {
       letter-spacing: 1px;
       transition: all 0.4s ease;
       
-      &:nth-child(1) { opacity: 0.4; font-size: 1.4rem;}
-      &:nth-child(2) { opacity: 0.7; margin-left: 10px; font-size: 1.3rem;}
+      &:nth-child(1) { 
+        opacity: 0.4; 
+        font-size: 1.4rem;
+      }
+      &:nth-child(2) { 
+        opacity: 0.7; 
+        margin-left: 10px; 
+        font-size: 1.3rem;
+      }
       &:nth-child(3) { 
         color: #2a8943; 
         opacity: 1;
@@ -82,22 +90,50 @@ h2, h3, h4, h5, button {
   }
 
   .hero-slogan {
-    font-size: 0.5rem; color: white; text-align: right; max-width: 300px; margin: 0; text-transform: uppercase;
+    font-size: 0.5rem; 
+    color: white; 
+    text-align: right; 
+    max-width: 300px; 
+    margin: 0; 
+    text-transform: uppercase;
   }
 
   .hero-prix {
-    font-size: 0.5rem; color: #ffffff; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-    background: rgba(42, 137, 67, 0.2); padding: 4px 10px; border-radius: 10px; display: flex; align-items: center; gap: 5px;
-    &::before { content: "→"; color: #2a8943; font-weight: bold; }
+    font-size: 0.5rem; 
+    color: #ffffff; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    background: rgba(42, 137, 67, 0.2); 
+    padding: 4px 10px; 
+    border-radius: 10px; 
+    display: flex; align-items: 
+    center; gap: 5px;
+    &::before { 
+      content: "→"; 
+      color: #2a8943; 
+      font-weight: bold; 
+    }
   }
 
   .hero-bouton {
-    padding: 10px 20px; font-size: 0.7rem; background-color: #2a8943; color: white; border: none;
-    cursor: pointer; border-radius: 20px; font-weight: bold; transition: all 0.3s ease;
-    font-family: "Anton", sans-serif; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px; 
+    font-size: 0.7rem; 
+    background-color: #2a8943; 
+    color: white; 
+    border: none;
+    cursor: pointer; 
+    border-radius: 20px; 
+    font-weight: bold; 
+    transition: all 0.3s ease;
+    font-family: "Anton", sans-serif; 
+    text-transform: uppercase; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 
     &:hover {
-      background-color: #ffffff; color: #2a8943; transform: translateY(-3px);
+      background-color: #ffffff; 
+      color: #2a8943; 
+      transform: translateY(-3px);
       box-shadow: 0 6px 20px rgba(42, 137, 67, 0.4);
     }
   }
@@ -120,8 +156,14 @@ h2, h3, h4, h5, button {
   &::before, &::after {
     content: ""; position: absolute; top: 0; width: 100vw; height: 100%; pointer-events: none;
   }
-  &::before { left: -100vw; box-shadow: 5px 0 15px rgba(42,137,67,0.2); }
-  &::after { right: -100vw; box-shadow: -5px 0 15px rgba(42,137,67,0.2); }
+  &::before { 
+    left: -100vw; 
+    box-shadow: 5px 0 15px rgba(42,137,67,0.2); 
+  }
+  &::after { 
+    right: -100vw; 
+    box-shadow: -5px 0 15px rgba(42,137,67,0.2); 
+  }
   box-shadow: inset 0 -20px 20px -15px rgba(42, 137, 67, 0.2);
 
   /* --- SECTIONS TEXTE & IMAGES (À PROPOS & RÉSERVE) --- */
@@ -177,7 +219,7 @@ h2, h3, h4, h5, button {
     &.img-femme { background-image: url('../Images/Gym8.jpg'); }
   }
 
-  /* --- SECTION ABONNEMENTS (REMISE À L'ORIGINE) --- */
+  /* --- SECTION ABONNEMENTS --- */
   .accueil-abonnements {
     width: 100%;
     display: flex;
@@ -296,37 +338,73 @@ h2, h3, h4, h5, button {
         }
 
         .abonnement-bouton {
-          background: #2a89439b; color: white; border: 1px solid #2a894355; padding: 12px; width: calc(100% - 50px); margin: 0 25px 25px 25px; font-family: "Anton", sans-serif; font-size: 1.1rem; border-radius: 15px; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease;
-          &:hover { background-color: #2a8943d7; transform: translateY(-3px); box-shadow: 0 0 15px rgba(42, 137, 67, 0.5); border-color: #2a8943; }
+          background: #2a89439b; 
+          color: white; 
+          border: 1px solid #2a894355; 
+          padding: 12px; 
+          width: calc(100% - 50px); 
+          margin: 0 25px 25px 25px; 
+          font-family: "Anton", sans-serif; 
+          font-size: 1.1rem; 
+          border-radius: 15px; 
+          cursor: pointer; 
+          text-transform: uppercase; 
+          transition: all 0.3s ease;
+
+          &:hover { 
+            background-color: #2a8943d7; 
+            transform: translateY(-3px); 
+            box-shadow: 0 0 15px rgba(42, 137, 67, 0.5); 
+            border-color: #2a8943; 
+          }
         }
       }
     }
   }
 }
 
-/* --- RESPONSIVE DESKTOP (WEB) --- */
+/* --- STYLE DESKTOP (Dès 768px) --- */
 @media (min-width: 768px) {
   .hero-affiche {
     height: 580px;
-    .hero-cta { bottom: 20px; right: 20px; }
-    .hero-bouton { padding: 15px 20px; font-size: 1.2rem; }
-    .hero-prix, .hero-slogan { font-size: 0.7rem; }
+    .hero-cta { 
+      bottom: 20px; 
+      right: 20px; 
+    }
+    .hero-bouton { 
+      padding: 15px 20px; 
+      font-size: 1.2rem; 
+    }
+    .hero-prix, .hero-slogan { 
+      font-size: 0.7rem; 
+    }
   }
 
   .hero-phrases {
-    top: 60px; left: 60px; gap: 0;
+    top: 60px; 
+    left: 60px; 
+    gap: 0;
+
     span {
       line-height: 0.85;
-      &:nth-child(1) { font-size: 2.9rem !important; }
-      &:nth-child(2) { font-size: 3.4rem !important; margin-left: 20px; }
-      &:nth-child(3) { font-size: 4.4rem !important; margin-left: 40px; }
+      &:nth-child(1) { 
+        font-size: 2.9rem !important; 
+      }
+      &:nth-child(2) { 
+        font-size: 3.4rem !important; 
+        margin-left: 20px; 
+      }
+      &:nth-child(3) { 
+        font-size: 4.4rem !important; 
+        margin-left: 40px; 
+      }
     }
   }
 
   .accueil-contenu, .conteneur-reserve {
     align-items: center;
 
-        .image-a-propos, .image-reserve {
+    .image-a-propos, .image-reserve {
       width: 80% !important;
       height: 500px !important;
       border-radius: 15px !important;
