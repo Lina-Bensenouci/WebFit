@@ -24,9 +24,8 @@ from starlette.responses import RedirectResponse
 app = FastAPI()
 
 # -------------------
-# 1. Middleware COOP (Priorité Haute)
+# 1. Middleware COOP
 # -------------------
-# On utilise la syntaxe décorateur pour s'assurer qu'il englobe bien la réponse finale
 @app.middleware("http")
 async def add_google_auth_headers(request: Request, call_next):
     response = await call_next(request)
