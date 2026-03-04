@@ -18,7 +18,7 @@
 }
 
 /* Hover uniquement sur desktop */
-@media (hover: hover) {
+@media (min-width: 1025px) {
   .entete-logo:hover {
     transform: scale(1.015);
   }
@@ -70,7 +70,8 @@
         border-radius: 15px;
         transition: opacity 0.3s ease;
 
-        @media (hover: hover) {
+        /* Bloque le hover sur mobile/tablette */
+        @media (min-width: 1025px) {
           &:hover { opacity: 0.8; }
         }
       }
@@ -93,7 +94,7 @@
   transition: transform 0.3s ease;
 }
 
-@media (hover: hover) {
+@media (min-width: 1025px) {
   .login-icon:hover {
     transform: scale(1.1);
   }
@@ -147,11 +148,17 @@
   text-transform: uppercase;
   cursor: pointer;
   border-radius: 15px;
-  /* Pas de hover en mobile */
+  
+  /* Désactivation stricte du hover pour mobile */
+  &:hover {
+    background: none;
+    color: #ffffff;
+    transform: none;
+  }
 }
 
 .menu-logo img {
-  height: 150px; /* Réduit légèrement pour mieux tenir sur iPhone */
+  height: 200px;
   width: auto;
   margin-top: 15%;
 }
@@ -208,7 +215,7 @@ nav .router-link {
 }
 
 /* Hover et focus uniquement sur desktop */
-@media (hover: hover) {
+@media (min-width: 1025px) {
   nav a:hover,
   nav a:focus,
   nav .router-link:hover,
