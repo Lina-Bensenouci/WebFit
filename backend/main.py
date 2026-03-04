@@ -30,8 +30,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Sécurité pour que l'admin reste connecté pendant sa session
-app.add_middleware(SessionMiddleware, secret_key="phrase_secrete_du_gym")
+# Sécurité pour que l'admin reste connecté pendant sa session (Configuré pour Render HTTPS)
+app.add_middleware(
+    SessionMiddleware, 
+    secret_key="phrase_secrete_du_gym",
+    https_only=True,
+    same_site="lax"
+)
 
 # Création automatique des tables dans le fichier webfit.db
 from models import Abonnement, Utilisateur, Horaire 
@@ -51,7 +56,8 @@ def lire_abonnements(db: Session = Depends(get_db)):
     abonnements = db.query(models.Abonnement).all()
     result = []
     for a in abonnements:
-        avantages = [av.strip() for av in a.avantages]
+        # Transformation des avantages en liste pour le frontend
+        avantages = [av.strip() for av in a.avantages] if a.avantages else []
         result.append({
             "id": a.id, "nom": a.nom, "prix": a.prix, "avantages": avantages
         })
@@ -82,21 +88,30 @@ def auth_google(token_data: TokenSchema, db: Session = Depends(get_db)):
 
 # Système de connexion pour accéder à la page Admin (admin / admin)
 class SimpleAuthBackend(AuthenticationBackend):
-    def __init__(self):
-        super().__init__(secret_key="cle_secrete_admin")
+    def __init__(self, secret_key: str):
+        super().__init__(secret_key=secret_key)
 
-    async def login(self, request: Request):
+    async def login(self, request: Request) -> bool:
         form = await request.form()
-        if form.get("username") == "admin" and form.get("password") == "admin":
-            request.session["user"] = "admin"
-            return RedirectResponse(url="/admin", status_code=302)
-        return RedirectResponse(url="/admin/login", status_code=302)
+        username = form.get("username")
+        password = form.get("password")
 
-    async def authenticate(self, request: Request):
-        user = request.session.get("user")
-        return {"username": user} if user else None
+        if username == "admin" and password == "admin":
+            # On stocke l'info dans la session sécurisée
+            request.session.update({"token": "admin_access"})
+            return True
+        return False
 
-auth_backend = SimpleAuthBackend()
+    async def logout(self, request: Request) -> bool:
+        request.session.clear()
+        return True
+
+    async def authenticate(self, request: Request) -> bool:
+        token = request.session.get("token")
+        return token == "admin_access"
+
+# Initialisation de l'interface d'administration
+auth_backend = SimpleAuthBackend(secret_key="cle_secrete_admin")
 admin = Admin(app, engine, authentication_backend=auth_backend, title="WebFit Admin")
 
 # Configuration de l'onglet Abonnements dans l'admin

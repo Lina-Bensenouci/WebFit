@@ -1,3 +1,4 @@
+import React from "react";
 import "./CoursGroupe.scss";
 import { Link } from "react-router-dom";
 
@@ -30,6 +31,12 @@ export default function CoursEnGroupe() {
           </div>
 
           <div className="corps-tableau">
+            {/* Indicateur de défilement mobile */}
+            <div className="indicateur-scroll">
+              <span>Faire défiler</span>
+              <span className="fleche-anim">→</span>
+            </div>
+
             <div className="defilement-x">
               <table className="planning-grille">
                 <tbody>
