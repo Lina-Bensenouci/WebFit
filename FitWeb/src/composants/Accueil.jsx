@@ -1,22 +1,20 @@
-// Accueil.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Accueil.scss";
 import FlecheH from "../Images/FlecheH.png";
 
 export default function Accueil() {
-  // Stockage des abonnements et de l'état de la flèche
   const [abonnements, setAbonnements] = useState([]);
   const [showScroll, setShowScroll] = useState(false);
 
   useEffect(() => {
+    // Chargement des données
     // Récupération des données depuis ton API Python
     const API_URL = import.meta.env.VITE_API_URL;
 
     fetch(`${API_URL}/abonnements`)
       .then((res) => res.json())
       .then((data) => {
-        // Filtrage pour ne garder que les abonnements 1, 2 et 6
         const selectionnes = data
           .filter(abo => [1, 2, 6].includes(abo.id))
           .sort((a, b) => {
@@ -26,9 +24,9 @@ export default function Accueil() {
         
         setAbonnements(selectionnes);
       })
-      .catch((err) => console.error("Erreur API:", err));
+      .catch((err) => console.error("Erreur chargement abonnements:", err));
 
-    // Vérification de la position du scroll pour afficher la flèche
+    // Gestion de l'affichage de la flèche au scroll
     const checkScrollTop = () => {
       if (!showScroll && window.pageYOffset > 400) {
         setShowScroll(true);
@@ -37,26 +35,28 @@ export default function Accueil() {
       }
     };
 
-    // Écouteur de mouvement de scroll
     window.addEventListener("scroll", checkScrollTop);
     return () => window.removeEventListener("scroll", checkScrollTop);
   }, [showScroll]);
 
-  // Action pour remonter en haut de page en douceur
+  // Fonction pour remonter en haut
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
     <div className="accueil">
-      {/* Bouton de retour en haut (visible selon le scroll) */}
-      <div 
+      {/* BOUTON FLÈCHE RETOUR EN HAUT */}
+    <div 
         className={`scroll-to-top ${showScroll ? "visible" : ""}`} 
         onClick={scrollToTop}>
         <img src={FlecheH} alt="Remonter" />
       </div>
 
-      {/* Section principale avec slogan et bouton d'appel à l'action */}
+      {/* SECTION HERO */}
       <div className="hero-affiche">
         <div className="hero-phrases">
           <span>Plus fort.</span>
@@ -69,18 +69,26 @@ export default function Accueil() {
           <Link to="/abonnements">
             <button className="hero-bouton">Abonnez-vous maintenant !</button>
           </Link>
+          <span className="hero-slogan">
+            WebFit transforme tes objectifs en résultats.
+          </span>
         </div>
       </div>
 
       <div className="accueil-contenu">
-        {/* Présentation textuelle du gym */}
+        {/* SECTION À PROPOS */}
         <div className="accueil-a-propos">
           <h1 id="aPropos">À propos de WebFit</h1>
-          <p>L’endroit où l’effort devient fierté et les objectifs réalité.</p>
+          <p>
+            Chez WebFit, nous croyons que chacun a une force en lui, parfois cachée. 
+            Ici, peu importe ton niveau : ce qui compte, c’est ta volonté de te dépasser. 
+            Nous sommes là pour t’encourager et célébrer chaque victoire avec toi. 
+            WebFit, l’endroit où l’effort devient fierté et les objectifs deviennent réalité.
+          </p>
           <div className="image-a-propos"></div>
         </div>
 
-        {/* Affichage dynamique des cartes d'abonnements */}
+        {/* SECTION ABONNEMENTS */}
         <div className="accueil-abonnements">
           <h1>Nos abonnements</h1>
           <div className="abonnements-grille">
@@ -103,7 +111,6 @@ export default function Accueil() {
                    
                    <h3>Avantages :</h3>
                    <ul>
-                     {/* Boucle pour lister chaque avantage de l'abonnement */}
                      {(abonnement.avantages || []).map((avantage, index) => (
                        <li key={index}>{avantage}</li>
                      ))}
@@ -118,16 +125,32 @@ export default function Accueil() {
           </div>
         </div>
 
-        {/* Sections visuelles sur les services du gym */}
+        {/* SECTION : CE QUE WEBFIT VOUS RÉSERVE */}
         <div className="conteneur-reserve">
-          <div className="bloc-reserve">
+          <div className="en-tete-reserve">
+            <h1>Tout ce que WebFit te réserve</h1>
+          </div>
+
+          <div className="bloc-reserve" id="equipements">
             <h2>Entraîne-toi sans pression</h2>
+            <p>
+              Chez WebFit, pas de jugement, juste un espace sûr pour te dépasser à ton rythme et te sentir bien dès le premier jour.
+            </p>
             <div className="image-reserve img-equipements"></div>
           </div>
 
-          <div className="bloc-reserve">
+          <div className="bloc-reserve" id="cours-groupe">
             <h2>Cours en groupe</h2>
+            <p> Rejoignez notre communauté dynamique ! Des séances variées et énergiques animées par des coachs passionnés pour brûler des calories dans le plaisir. </p>
             <div className="image-reserve img-cours"></div>
+          </div>
+
+          <div className="bloc-reserve" id="section-femme">
+            <h2>Section pour femme</h2>
+            <p>
+              Profite de notre section femme, un espace intime et accueillant pour t’entraîner en toute confiance, à ton rythme.
+            </p>
+            <div className="image-reserve img-femme"></div>
           </div>
         </div>
       </div>
