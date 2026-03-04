@@ -24,7 +24,7 @@ app = FastAPI()
 # Autoriser le site React à communiquer avec ce serveur
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], 
+    allow_origins=["http://localhost:5173", "https://web-fit-indol.vercel.app"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
