@@ -3,7 +3,6 @@ uvicorn
 sqlalchemy
 sqladmin
 google-auth
-python-multipart
-itsdangerous
-starlette
 python-dotenv
+python-multipart
+requests
