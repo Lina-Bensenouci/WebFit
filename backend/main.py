@@ -17,6 +17,7 @@ from sqladmin import Admin, ModelView
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.middleware.sessions import SessionMiddleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 from starlette.responses import RedirectResponse
 # Ajout pour la compatibilité Render (Proxy)
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
@@ -24,8 +25,9 @@ from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 # On lance l'application
 app = FastAPI()
 
-# Indispensable sur Render : permet à FastAPI de savoir qu'il est en HTTPS derrière le proxy
+# CORRECTION CRITIQUE RENDER : On force la reconnaissance du HTTPS
 app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])
 
 # Autoriser le site React à communiquer avec ce serveur
 app.add_middleware(
@@ -37,11 +39,12 @@ app.add_middleware(
 )
 
 # Sécurité pour que l'admin reste connecté pendant sa session (Correction Render HTTPS)
+# On utilise same_site="lax" et secure=True (via https_only)
 app.add_middleware(
     SessionMiddleware, 
     secret_key="phrase_secrete_du_gym",
-    https_only=True,    # Force le cookie via HTTPS uniquement
-    same_site="lax",    # Protection standard pour les redirections
+    https_only=True,    
+    same_site="lax",    
 )
 
 # Création automatique des tables dans le fichier webfit.db
@@ -102,8 +105,9 @@ class SimpleAuthBackend(AuthenticationBackend):
         password = form.get("password")
 
         if username == "admin" and password == "admin":
-            # On utilise 'token' car c'est la clé cherchée par défaut par sqladmin
-            request.session.update({"token": "admin_access"})
+            # On utilise le dictionnaire de session Starlette correctement
+            request.session.clear()
+            request.session.update({"user_id": "admin"})
             return True
         return False
 
@@ -112,11 +116,8 @@ class SimpleAuthBackend(AuthenticationBackend):
         return True
 
     async def authenticate(self, request: Request) -> bool:
-        # Vérification du jeton de session
-        token = request.session.get("token")
-        if token == "admin_access":
-            return True
-        return False
+        # On vérifie la présence de la clé dans la session
+        return "user_id" in request.session
 
 # Initialisation de l'interface d'administration
 auth_backend = SimpleAuthBackend(secret_key="cle_secrete_admin")
