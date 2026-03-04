@@ -1,100 +1,137 @@
 # main.py
+import os # Pour savoir si on est sur Render ou en local
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import engine, Base, SessionLocal
 import models
-from models import Abonnement, Utilisateur, Horaire  # Import direct pour SQLAdmin
 import schemas
 from schemas import TokenSchema, UtilisateurResponse, HoraireUpdate, HoraireResponse
 
-# Outils pour la connexion avec Google
+# Google auth
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 
-# Outils pour créer l'interface d'administration
+# SQLAdmin imports
 from sqladmin import Admin, ModelView
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.middleware.trustedhost import TrustedHostMiddleware
 from starlette.responses import RedirectResponse
-# Ajout pour la compatibilité Render (Proxy)
+# Obligatoire pour pas que Render bloque la connexion
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
-# On lance l'application
+# Si la variable RENDER existe, on est en ligne
+IS_PROD = os.getenv("RENDER") is not None
+
+# -------------------
+# FastAPI App
+# -------------------
 app = FastAPI()
 
-# CORRECTION CRITIQUE RENDER : On force la reconnaissance du HTTPS
-app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
-app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])
+# Petit correctif pour que Render accepte le HTTPS sans bugger
+if IS_PROD:
+    app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
-# Autoriser le site React à communiquer avec ce serveur
+# -------------------
+# 1. Middleware COOP (Sécurité Google)
+# -------------------
+@app.middleware("http")
+async def add_google_auth_headers(request: Request, call_next):
+    response = await call_next(request)
+    # Permet à la popup Google de parler au site sans se faire bloquer
+    response.headers["Cross-Origin-Opener-Policy"] = "same-origin-allow-popups"
+    response.headers["Cross-Origin-Resource-Policy"] = "cross-origin"
+    return response
+
+# -------------------
+# 2. CORS (Lien avec le React)
+# -------------------
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "https://web-fit-indol.vercel.app"], 
-    allow_credentials=True,
+    allow_credentials=True, # Important pour garder la session ouverte
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Sécurité pour que l'admin reste connecté pendant sa session (Correction Render HTTPS)
-# On utilise same_site="lax" et secure=True (via https_only)
+# -------------------
+# 3. Session (Le "badge" de connexion)
+# -------------------
 app.add_middleware(
     SessionMiddleware, 
-    secret_key="phrase_secrete_du_gym",
-    https_only=True,    
-    same_site="lax",    
+    secret_key="change_this_to_a_random_string_123456",
+    https_only=IS_PROD, # En local pas besoin de HTTPS, sur Render oui
+    same_site="lax"
 )
 
-# Création automatique des tables dans le fichier webfit.db
+# -------------------
+# Création des tables
+# -------------------
+from models import Abonnement, Utilisateur, Horaire
+# Crée la base de données automatiquement si elle n'existe pas
 Base.metadata.create_all(bind=engine)
 
-# Fonction pour ouvrir et fermer la base de données proprement
+# Outil pour se connecter à la DB dans les routes
 def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
-        db.close()
+        db.close() # On ferme toujours pour pas saturer la DB
 
-# Route pour envoyer la liste des abonnements au site
+# -------------------
+# Routes publiques (Pour le site)
+# -------------------
 @app.get("/abonnements")
 def lire_abonnements(db: Session = Depends(get_db)):
     abonnements = db.query(models.Abonnement).all()
     result = []
     for a in abonnements:
-        # Transformation des avantages en liste pour le frontend
+        # On transforme le texte en liste propre pour le React
         avantages = [av.strip() for av in a.avantages] if a.avantages else []
         result.append({
-            "id": a.id, "nom": a.nom, "prix": a.prix, "avantages": avantages
+            "id": a.id,
+            "nom": a.nom,
+            "prix": a.prix,
+            "avantages": avantages
         })
     return result
 
-# Route pour envoyer les horaires au footer du site (triés par ordre)
-@app.get("/horaires")
-def get_horaires(db: Session = Depends(get_db)):
-    return db.query(models.Horaire).order_by(models.Horaire.ordre).all()
-
-# Logique pour la connexion avec un compte Google
+# -------------------
+# Auth Google
+# -------------------
 GOOGLE_CLIENT_ID = "338498208696-blf1m0mpo43s3ebq6ntpsadbitp3n2mu.apps.googleusercontent.com"
 
 @app.post("/auth/google", response_model=UtilisateurResponse)
 def auth_google(token_data: TokenSchema, db: Session = Depends(get_db)):
     try:
-        idinfo = id_token.verify_oauth2_token(token_data.token, google_requests.Request(), GOOGLE_CLIENT_ID)
+        # On vérifie si le token envoyé par le front est valide chez Google
+        idinfo = id_token.verify_oauth2_token(
+            token_data.token,
+            google_requests.Request(),
+            GOOGLE_CLIENT_ID
+        )
+
         email = idinfo.get("email")
+        name = idinfo.get("name")
+        picture = idinfo.get("picture")
+        google_id = idinfo.get("sub")
+
+        # Si l'user n'existe pas en DB, on le crée direct
         user = db.query(models.Utilisateur).filter(models.Utilisateur.email == email).first()
         if not user:
-            user = models.Utilisateur(nom=idinfo.get("name"), email=email, photo=idinfo.get("picture"), google_id=idinfo.get("sub"))
+            user = models.Utilisateur(nom=name, email=email, photo=picture, google_id=google_id)
             db.add(user)
             db.commit()
             db.refresh(user)
         return user
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Erreur Google")
+        raise HTTPException(status_code=500, detail=f"Erreur serveur: {str(e)}")
 
-# Système de connexion pour accéder à la page Admin (admin / admin)
+# -------------------
+# Admin SQLAdmin (Le tableau de bord)
+# -------------------
 class SimpleAuthBackend(AuthenticationBackend):
     def __init__(self, secret_key: str):
         super().__init__(secret_key=secret_key)
@@ -104,60 +141,59 @@ class SimpleAuthBackend(AuthenticationBackend):
         username = form.get("username")
         password = form.get("password")
 
+        # Si c'est admin/admin, on crée la session
         if username == "admin" and password == "admin":
-            # On utilise le dictionnaire de session Starlette correctement
-            request.session.clear()
-            request.session.update({"user_id": "admin"})
+            request.session.update({"user": "admin"})
             return True
         return False
 
     async def logout(self, request: Request) -> bool:
-        request.session.clear()
+        request.session.clear() # On vide tout quand on quitte
         return True
 
     async def authenticate(self, request: Request) -> bool:
-        # On vérifie la présence de la clé dans la session
-        return "user_id" in request.session
+        # On vérifie si le mot "user" est dans la session pour laisser passer
+        return "user" in request.session
 
-# Initialisation de l'interface d'administration
-auth_backend = SimpleAuthBackend(secret_key="cle_secrete_admin")
+auth_backend = SimpleAuthBackend(secret_key="change_this_to_a_random_string_123456")
 admin = Admin(app, engine, authentication_backend=auth_backend, title="WebFit Admin")
 
-# Configuration de l'onglet Abonnements dans l'admin
-class AbonnementAdmin(ModelView, model=Abonnement):
-    column_list = [Abonnement.id, Abonnement.nom, Abonnement.prix]
+# --- On définit ce qu'on voit dans l'Admin ---
+class AbonnementAdmin(ModelView, model=models.Abonnement):
+    column_list = [models.Abonnement.id, models.Abonnement.nom, models.Abonnement.prix]
     icon = "fa-solid fa-cart-shopping"
 
-# Configuration de l'onglet Utilisateurs dans l'admin
-class UtilisateurAdmin(ModelView, model=Utilisateur):
-    column_list = [Utilisateur.id, Utilisateur.nom, Utilisateur.email]
+class UtilisateurAdmin(ModelView, model=models.Utilisateur):
+    column_list = [models.Utilisateur.id, models.Utilisateur.nom, models.Utilisateur.email]
     icon = "fa-solid fa-user"
 
-# Configuration de l'onglet Horaires dans l'admin
-class HoraireAdmin(ModelView, model=Horaire):
+class HoraireAdmin(ModelView, model=models.Horaire):
     name_plural = "Horaires"
     icon = "fa-solid fa-clock"
-    column_list = [Horaire.ordre, Horaire.jour, Horaire.ouverture, Horaire.fermeture]
-    form_columns = [Horaire.jour, Horaire.ouverture, Horaire.fermeture, Horaire.ordre]
+    column_list = [models.Horaire.ordre, models.Horaire.jour, models.Horaire.ouverture, models.Horaire.fermeture]
 
-# On ajoute les onglets au menu de l'interface admin
+# --- On ajoute les boutons dans le menu de gauche ---
 admin.add_view(AbonnementAdmin)
 admin.add_view(UtilisateurAdmin)
-admin.add_view(HoraireAdmin)
+admin.add_view(HoraireAdmin) 
 
-# Route pour permettre à l'admin de modifier les heures d'ouverture
+# -------------------
+# Routes Horaires (Pour le footer du site)
+# -------------------
+@app.get("/horaires")
+def get_horaires(db: Session = Depends(get_db)):
+    # On trie par ordre pour avoir Lundi, Mardi, etc.
+    return db.query(models.Horaire).order_by(models.Horaire.ordre).all()
+
 @app.put("/horaires/{id}")
 def update_horaire(id: int, schema: HoraireUpdate, db: Session = Depends(get_db)):
-    # On cherche l'horaire précis par son ID
+    # Route pour modifier une heure via le code ou l'admin
     db_horaire = db.query(models.Horaire).filter(models.Horaire.id == id).first()
     if not db_horaire:
-        raise HTTPException(status_code=404, detail="Horaire introuvable")
+        raise HTTPException(status_code=404, detail="Horaire non trouvé")
         
-    # On met à jour les heures
     db_horaire.ouverture = schema.ouverture
     db_horaire.fermeture = schema.fermeture
-    
-    # On sauvegarde les changements dans la base de données
-    db.commit()
+    db.commit() # On valide le changement
     db.refresh(db_horaire)
     return db_horaire
