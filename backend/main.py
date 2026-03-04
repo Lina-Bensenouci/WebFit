@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import engine, Base, SessionLocal
 import models
+from models import Abonnement, Utilisateur, Horaire  # Import direct pour SQLAdmin
 import schemas
 from schemas import TokenSchema, UtilisateurResponse, HoraireUpdate, HoraireResponse
 
@@ -30,16 +31,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Sécurité pour que l'admin reste connecté pendant sa session (Configuré pour Render HTTPS)
+# Sécurité pour que l'admin reste connecté pendant sa session (Correction Render HTTPS)
 app.add_middleware(
     SessionMiddleware, 
     secret_key="phrase_secrete_du_gym",
-    https_only=True,
-    same_site="lax"
+    https_only=True,    # Indispensable sur Render pour que le navigateur accepte le cookie
+    same_site="lax",    # Permet de maintenir la session lors des redirections internes
 )
 
 # Création automatique des tables dans le fichier webfit.db
-from models import Abonnement, Utilisateur, Horaire 
 Base.metadata.create_all(bind=engine)
 
 # Fonction pour ouvrir et fermer la base de données proprement
@@ -107,6 +107,7 @@ class SimpleAuthBackend(AuthenticationBackend):
         return True
 
     async def authenticate(self, request: Request) -> bool:
+        # Vérification du jeton de session pour autoriser l'accès aux tables
         token = request.session.get("token")
         return token == "admin_access"
 
@@ -115,7 +116,7 @@ auth_backend = SimpleAuthBackend(secret_key="cle_secrete_admin")
 admin = Admin(app, engine, authentication_backend=auth_backend, title="WebFit Admin")
 
 # Configuration de l'onglet Abonnements dans l'admin
-class AbonnementAdmin(ModelView, model=Abonnement): # Utilise le modèle importé directement
+class AbonnementAdmin(ModelView, model=Abonnement):
     column_list = [Abonnement.id, Abonnement.nom, Abonnement.prix]
     icon = "fa-solid fa-cart-shopping"
 
@@ -129,9 +130,7 @@ class HoraireAdmin(ModelView, model=Horaire):
     name_plural = "Horaires"
     icon = "fa-solid fa-clock"
     column_list = [Horaire.ordre, Horaire.jour, Horaire.ouverture, Horaire.fermeture]
-
-# On force la création des tables avant d'ajouter les vues à l'admin
-Base.metadata.create_all(bind=engine)
+    form_columns = [Horaire.jour, Horaire.ouverture, Horaire.fermeture, Horaire.ordre]
 
 # On ajoute les onglets au menu de l'interface admin
 admin.add_view(AbonnementAdmin)
