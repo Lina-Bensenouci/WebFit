@@ -18,9 +18,14 @@ from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import RedirectResponse
+# Ajout pour la compatibilité Render (Proxy)
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 # On lance l'application
 app = FastAPI()
+
+# Indispensable sur Render : permet à FastAPI de savoir qu'il est en HTTPS derrière le proxy
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 # Autoriser le site React à communiquer avec ce serveur
 app.add_middleware(
@@ -35,8 +40,8 @@ app.add_middleware(
 app.add_middleware(
     SessionMiddleware, 
     secret_key="phrase_secrete_du_gym",
-    https_only=True,    # Indispensable sur Render pour que le navigateur accepte le cookie
-    same_site="lax",    # Permet de maintenir la session lors des redirections internes
+    https_only=True,    # Force le cookie via HTTPS uniquement
+    same_site="lax",    # Protection standard pour les redirections
 )
 
 # Création automatique des tables dans le fichier webfit.db
@@ -97,7 +102,7 @@ class SimpleAuthBackend(AuthenticationBackend):
         password = form.get("password")
 
         if username == "admin" and password == "admin":
-            # On stocke l'info dans la session sécurisée
+            # On utilise 'token' car c'est la clé cherchée par défaut par sqladmin
             request.session.update({"token": "admin_access"})
             return True
         return False
@@ -107,9 +112,11 @@ class SimpleAuthBackend(AuthenticationBackend):
         return True
 
     async def authenticate(self, request: Request) -> bool:
-        # Vérification du jeton de session pour autoriser l'accès aux tables
+        # Vérification du jeton de session
         token = request.session.get("token")
-        return token == "admin_access"
+        if token == "admin_access":
+            return True
+        return False
 
 # Initialisation de l'interface d'administration
 auth_backend = SimpleAuthBackend(secret_key="cle_secrete_admin")
