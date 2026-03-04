@@ -37,19 +37,26 @@
     display: flex;
     align-items: center;
 
+    /* MENU DÉROULANT (GOOGLE DESKTOP) */
     .menu-deroulant {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background-color: #1a1a1a;
-      border: 1px solid #2A8943;
-      padding: 10px;
-      z-index: 3000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-width: 120px;
-      border-radius: 5px;
+      /* MASQUÉ PAR DÉFAUT SUR MOBILE */
+      display: none; 
+
+      /* AFFICHÉ UNIQUEMENT SUR DESKTOP */
+      @media (min-width: 1025px) {
+        display: flex; 
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #1a1a1a;
+        border: 1px solid #2A8943;
+        padding: 10px;
+        z-index: 3000;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 120px;
+        border-radius: 5px;
+      }
 
       .nom-utilisateur {
         color: white;
@@ -70,7 +77,7 @@
         border-radius: 15px;
         transition: opacity 0.3s ease;
 
-        /* Bloque le hover sur mobile/tablette */
+        /* Bloque le hover sur desktop */
         @media (min-width: 1025px) {
           &:hover { opacity: 0.8; }
         }
@@ -136,7 +143,7 @@
   padding-bottom: 50px;
 }
 
-/* DECONNEXION */
+/* DECONNEXION MOBILE */
 .bouton-deconnexion-mobile {
   margin-top: 20px;
   background: none;
