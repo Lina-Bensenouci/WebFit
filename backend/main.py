@@ -115,19 +115,23 @@ auth_backend = SimpleAuthBackend(secret_key="cle_secrete_admin")
 admin = Admin(app, engine, authentication_backend=auth_backend, title="WebFit Admin")
 
 # Configuration de l'onglet Abonnements dans l'admin
-class AbonnementAdmin(ModelView, model=models.Abonnement):
-    column_list = [models.Abonnement.id, models.Abonnement.nom, models.Abonnement.prix]
+class AbonnementAdmin(ModelView, model=Abonnement): # Utilise le modèle importé directement
+    column_list = [Abonnement.id, Abonnement.nom, Abonnement.prix]
+    icon = "fa-solid fa-cart-shopping"
 
 # Configuration de l'onglet Utilisateurs dans l'admin
-class UtilisateurAdmin(ModelView, model=models.Utilisateur):
-    column_list = [models.Utilisateur.id, models.Utilisateur.nom, models.Utilisateur.email]
+class UtilisateurAdmin(ModelView, model=Utilisateur):
+    column_list = [Utilisateur.id, Utilisateur.nom, Utilisateur.email]
+    icon = "fa-solid fa-user"
 
 # Configuration de l'onglet Horaires dans l'admin
-class HoraireAdmin(ModelView, model=models.Horaire):
+class HoraireAdmin(ModelView, model=Horaire):
     name_plural = "Horaires"
     icon = "fa-solid fa-clock"
-    column_list = [models.Horaire.ordre, models.Horaire.jour, models.Horaire.ouverture, models.Horaire.fermeture]
-    form_columns = [models.Horaire.jour, models.Horaire.ouverture, models.Horaire.fermeture, models.Horaire.ordre]
+    column_list = [Horaire.ordre, Horaire.jour, Horaire.ouverture, Horaire.fermeture]
+
+# On force la création des tables avant d'ajouter les vues à l'admin
+Base.metadata.create_all(bind=engine)
 
 # On ajoute les onglets au menu de l'interface admin
 admin.add_view(AbonnementAdmin)
