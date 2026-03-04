@@ -399,8 +399,8 @@ h2, h3, h4, h5, button {
   .scroll-to-top {
     bottom: 40px; 
     right: 40px; 
-    width: 45px; 
-    height: 45px;
+    width: 40px; 
+    height: 40px;
 
     &:hover img {
       transform: rotate(-90deg) translateX(8px); 
@@ -408,7 +408,7 @@ h2, h3, h4, h5, button {
   }
 
   .hero-affiche {
-    height: 580px;
+    height: 520px;
     .hero-cta { 
       bottom: 20px; 
       right: 20px; 

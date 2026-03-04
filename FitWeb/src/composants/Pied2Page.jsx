@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./Pied2Page.scss";
 import LogoWebFit from "../Images/Logo4WebFit.png";
@@ -5,6 +6,16 @@ import InstaIcon from "../Images/instagram.png";
 import TikTokIcon from "../Images/tiktok.png";
 
 export default function Footer() {
+  const [horaires, setHoraires] = useState([]);
+
+  useEffect(() => {
+    // Récupération des données depuis FastAPI
+    fetch("http://localhost:8000/horaires")
+      .then((res) => res.json())
+      .then((data) => setHoraires(data))
+      .catch((err) => console.error("Erreur chargement horaires:", err));
+  }, []);
+
   return (
     <footer className="footer">
       {/* Menu */}
@@ -41,13 +52,13 @@ export default function Footer() {
             </tr>
           </thead>
           <tbody>
-            <tr><td>Lundi</td><td>5h</td><td>23h</td></tr>
-            <tr><td>Mardi</td><td>5h</td><td>23h</td></tr>
-            <tr><td>Mercredi</td><td>5h</td><td>23h</td></tr>
-            <tr><td>Jeudi</td><td>5h</td><td>23h</td></tr>
-            <tr><td>Vendredi</td><td>5h</td><td>23h</td></tr>
-            <tr><td>Samedi</td><td>5h</td><td>21h</td></tr>
-            <tr><td>Dimanche</td><td>7h</td><td>21h</td></tr>
+            {horaires.map((h) => (
+              <tr key={h.id}>
+                <td>{h.jour}</td>
+                <td>{h.ouverture}</td>
+                <td>{h.fermeture}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

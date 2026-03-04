@@ -2,10 +2,11 @@ import React, { useEffect, useImperativeHandle, forwardRef } from "react";
 
 const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
   
+  // Permet au parent d'appeler la fonction prompt() manuellement
   useImperativeHandle(ref, () => ({
     prompt: () => {
       if (window.google) {
-        // Déclenche directement le bouton invisible pour ouvrir la fenêtre classique
+        // On simule un clic sur le vrai bouton Google caché dans notre div
         const googleBtn = document.querySelector('div[id="google-hidden-btn"] div[role="button"]');
         if (googleBtn) {
           googleBtn.click();
@@ -17,15 +18,16 @@ const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
   }));
 
   useEffect(() => {
+    // Config de base de l'API Google
     const initializeGoogle = () => {
       if (window.google) {
         window.google.accounts.id.initialize({
           client_id: "338498208696-blf1m0mpo43s3ebq6ntpsadbitp3n2mu.apps.googleusercontent.com",
-          callback: handleCallbackResponse,
+          callback: handleCallbackResponse, // La fonction à lancer après la connexion
           use_fedcm_for_prompt: true 
         });
 
-        // On crée le bouton mais on le cache
+        // On génère le bouton officiel de Google dans notre div cachée
         window.google.accounts.id.renderButton(
           document.getElementById("google-hidden-btn"),
           { theme: "outline", size: "large" } 
@@ -33,17 +35,20 @@ const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
       }
     };
 
+    // Pour décoder le jeton (token) renvoyé par Google
     const handleCallbackResponse = (response) => {
       try {
-        // Décodage des infos utilisateur (Nom, Photo, Email)
+        // Le token est un JWT, on récupère la partie du milieu (payload)
         const base64Url = response.credential.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        // On transforme le base64 en JSON lisible
         const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
           '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
         ).join(''));
 
         const userObject = JSON.parse(jsonPayload);
         
+        // On renvoie les infos propres au composant parent
         onSuccess({
           nom: userObject.name,
           photo: userObject.picture,
@@ -55,20 +60,21 @@ const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
       }
     };
 
+    // Charge le script Google SDK si il n'est pas déjà sur la page
     if (!document.getElementById("google-gsi-client")) {
       const script = document.createElement("script");
       script.id = "google-gsi-client";
       script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
-      script.onload = initializeGoogle;
+      script.onload = initializeGoogle; // Initialise une fois chargé
       document.head.appendChild(script);
     } else {
-      initializeGoogle();
+      initializeGoogle(); // Déjà là, on initialise direct
     }
   }, [onSuccess]);
 
-  // Le bouton est là mais invisible pour l'utilisateur
+  // Conteneur du bouton Google, mis en display: none car on veut le déclencher nous-même
   return <div style={{ display: "none" }} id="google-hidden-btn"></div>; 
 });
 
