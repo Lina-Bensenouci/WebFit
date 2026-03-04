@@ -7,15 +7,17 @@ import TikTokIcon from "../Images/tiktok.png";
 
 export default function Footer() {
   const [horaires, setHoraires] = useState([]);
-
   useEffect(() => {
-    // Récupération des données depuis FastAPI
-    fetch("http://localhost:8000/horaires")
+    // On récupère la base de l'URL (soit localhost, soit Render)
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    // On combine la base avec la route spécifique
+    fetch(`${API_URL}/horaires`)
       .then((res) => res.json())
       .then((data) => setHoraires(data))
       .catch((err) => console.error("Erreur chargement horaires:", err));
   }, []);
-
+  
   return (
     <footer className="footer">
       {/* Menu */}

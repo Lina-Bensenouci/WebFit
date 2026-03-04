@@ -22,7 +22,7 @@ const GoogleLogin = forwardRef(({ onSuccess }, ref) => {
     const initializeGoogle = () => {
       if (window.google) {
         window.google.accounts.id.initialize({
-          client_id: "338498208696-blf1m0mpo43s3ebq6ntpsadbitp3n2mu.apps.googleusercontent.com",
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
           callback: handleCallbackResponse, // La fonction à lancer après la connexion
           use_fedcm_for_prompt: true 
         });

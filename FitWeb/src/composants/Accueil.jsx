@@ -11,7 +11,9 @@ export default function Accueil() {
 
   useEffect(() => {
     // Récupération des données depuis ton API Python
-    fetch("http://localhost:8000/abonnements")
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    fetch(`${API_URL}/abonnements`)
       .then((res) => res.json())
       .then((data) => {
         // Filtrage pour ne garder que les abonnements 1, 2 et 6

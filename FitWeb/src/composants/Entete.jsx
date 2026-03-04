@@ -30,7 +30,11 @@ export default function Entete() {
   // SECTION : LOGIQUE D'AUTHENTIFICATION
   const connexionBackend = async (donneesGoogle) => {
     try {
-      const reponse = await fetch("http://localhost:8000/auth/google", {
+      // On récupère l'adresse de base (configurée dans le .env)
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      // On remplace l'URL fixe par la variable dynamique
+      const reponse = await fetch(`${API_URL}/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: donneesGoogle.token }),
