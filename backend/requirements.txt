@@ -6,3 +6,7 @@ google-auth
 python-dotenv
 python-multipart
 requests
+itsdangerous
+starlette
+email-validator
+pydantic-settings
