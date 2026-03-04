@@ -16,8 +16,12 @@
   width: auto;
   transition: transform 0.5s ease;
 }
-.entete-logo:hover {
-  transform: scale(1.015);
+
+/* Hover uniquement sur desktop */
+@media (hover: hover) {
+  .entete-logo:hover {
+    transform: scale(1.015);
+  }
 }
 
 /* Burger + Login collés */
@@ -63,8 +67,12 @@
         font-family: "Anton", sans-serif;
         text-transform: uppercase;
         cursor: pointer;
-        &:hover { opacity: 0.8; }
         border-radius: 15px;
+        transition: opacity 0.3s ease;
+
+        @media (hover: hover) {
+          &:hover { opacity: 0.8; }
+        }
       }
     }
   }
@@ -84,16 +92,21 @@
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-.login-icon:hover {
-  transform: scale(1.1);
+
+@media (hover: hover) {
+  .login-icon:hover {
+    transform: scale(1.1);
+  }
 }
 
 /* Menu burger */
 .menu {
   position: fixed;
   inset: 0;
+  /* Correction Safari iPhone */
   height: 100vh;
-    background-color: #1a1a1a;
+  height: 100dvh; 
+  background-color: #1a1a1a;
 
   /* Grain + gradient foncé */
   background-image: 
@@ -117,6 +130,7 @@
   justify-content: flex-start; /* Ne pas centrer verticalement */
   align-items: center;
   overflow-y: auto; /* Permet de scroller si le contenu dépasse */
+  -webkit-overflow-scrolling: touch;
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -133,10 +147,11 @@
   text-transform: uppercase;
   cursor: pointer;
   border-radius: 15px;
+  /* Pas de hover en mobile */
 }
 
 .menu-logo img {
-  height: 200px;
+  height: 150px; /* Réduit légèrement pour mieux tenir sur iPhone */
   width: auto;
   margin-top: 15%;
 }
@@ -192,17 +207,19 @@ nav .router-link {
   }
 }
 
-/* Hover et focus */
-nav a:hover,
-nav a:focus,
-nav .router-link:hover,
-nav .router-link:focus {
-  color: #2A8943;
-  transform: scale(1.04);
-  
-  /* On active la ligne au survol */
-  &::after {
-    width: 100%;
+/* Hover et focus uniquement sur desktop */
+@media (hover: hover) {
+  nav a:hover,
+  nav a:focus,
+  nav .router-link:hover,
+  nav .router-link:focus {
+    color: #2A8943;
+    transform: scale(1.04);
+    
+    /* On active la ligne au survol */
+    &::after {
+      width: 100%;
+    }
   }
 }
 
@@ -217,6 +234,7 @@ nav .router-link.active {
     width: 100%;
   }
 }
+
 /* Desktop menu */
 .menu-desktop-nav {
   display: none; /* caché par défaut */
@@ -224,21 +242,14 @@ nav .router-link.active {
 
 /* --- STYLE DESKTOP (Dès 768px) --- */
 @media (min-width: 768px) and (max-width: 1090px) {
-
-  .burger { 
-    display: none; 
-  }
-  .menu { 
-    display: none; 
-  }
+  .burger { display: none; }
+  .menu { display: none; }
   .entete { 
     justify-content: space-between; 
     align-items: center; 
     margin-top: 1%;
   }
-  .entete-logo img { 
-    height: 60px; 
-  }
+  .entete-logo img { height: 60px; }
   .entete-droite { 
     display: flex; 
     align-items: center; 
@@ -252,32 +263,20 @@ nav .router-link.active {
     margin: 0; 
     padding: 0; 
   }
-  .menu-desktop-nav a { 
-    font-size: 18px !important; 
-  }
-  .login-icon { 
-    height: 35px; 
-  }
+  .menu-desktop-nav a { font-size: 18px !important; }
+  .login-icon { height: 35px; }
 }
 
 /* --- STYLE GRAND ÉCRAN (Dès 1091px) --- */
 @media (min-width: 1091px) {
-
-  .burger { 
-    display: none; 
-  }
-  .menu { 
-    display: none; 
-  }
+  .burger { display: none; }
+  .menu { display: none; }
   .entete { 
     margin-top: 1%; 
-    justify-content: 
-    space-between; 
+    justify-content: space-between; 
     align-items: center; 
   }
-  .entete-logo img { 
-    height: 70px; 
-  }
+  .entete-logo img { height: 70px; }
   .entete-droite { 
     display: flex; 
     align-items: center; 
@@ -291,10 +290,6 @@ nav .router-link.active {
     padding: 0; 
     gap: 70px; 
   }
-  .menu-desktop-nav a { 
-    font-size: 22px !important; 
-  }
-  .login-icon { 
-    height: 35px; 
-  }
+  .menu-desktop-nav a { font-size: 22px !important; }
+  .login-icon { height: 35px; }
 }
