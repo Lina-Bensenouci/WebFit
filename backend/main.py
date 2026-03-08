@@ -82,6 +82,10 @@ def get_db():
 
 # -------------------
 # Routes publiques (Pour le site)
+# -------------------
+
+# -------------------
+# Abonnements
 # 
 # Cette fonction récupère la liste de tous les abonnements depuis la base de données.
 #
@@ -91,20 +95,21 @@ def get_db():
 #    - "/abonnements" = l'adresse web où on peut accéder à cette fonction (webFit/abonnements)
 #
 # def lire_abonnements() :
-#    - def = mot-clé Python pour DÉFINIR une nouvelle fonction 
+#    - def = mot-clé Python pour définir une nouvelle fonction 
 #    - lire_abonnements = le nom qu'on donne à notre fonction
 #    - () = les paramètres que la fonction peut recevoir
 #
 # db: Session = Depends(get_db) :
 #    - db = le nom qu'on donne à notre accès à la base de données
 #    - Session = l'outil qui maintient la connexion ouverte le temps de lire les données
-#    - Depends(get_db) = une outils de FastAPI qui nous "fournit" la connexion toute prête (L'ouvrir, vérifier qu'elle fonctionne et l'a fermer)
+#    - Depends(get_db) = une outils de FastAPI qui nous "fournit" la connexion toute prête 
+#       (L'ouvrir, vérifier qu'elle fonctionne et l'a fermer)
 #      au moment précis où on lance la fonction
 #
 # @returns Une liste d'objets abonnement avec :
 #          - id : le numéro unique de l'abonnement  
 #          - nom : le nom de l'abonnement (ex: "Premium")
-#          - prix : le prix en euros
+#          - prix : le prix en dollars
 #          - avantages : la liste des avantages
 # -------------------
 
@@ -223,7 +228,7 @@ class SimpleAuthBackend(AuthenticationBackend):
         # On vérifie si le mot "user" est dans la session pour laisser passer
         return "user" in request.session
 
-auth_backend = SimpleAuthBackend(secret_key="change_this_to_a_random_string_123456")
+auth_backend = SimpleAuthBackend(secret_key="change_this_to_a_random_string_123456") # À changer pas une suite de lettres et chiffres imprévisibles
 admin = Admin(app, engine, authentication_backend=auth_backend, title="WebFit Admin")
 
 # --- On définit ce qu'on voit dans l'Admin ---
