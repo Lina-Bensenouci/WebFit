@@ -10,7 +10,7 @@ Projet site web pour une salle de musculation fictive
 - React + Vite
 
 ## Fichier à voir
-- Main.py
+- Main.py -> WebFit/backend/Main.py
 - Blocs (Abonnements, Google, Admin, Horaire)
 
 ## Lien GitHub : https://github.com/Lina-Bensenouci/WebFit
